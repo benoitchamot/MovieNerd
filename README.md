@@ -2,7 +2,7 @@
 Repository for Monash University Bootcamp Project 3 (Group 7)
 
 ## File structure
-TBW
+TBW...
 
 ## Data engineering
 ### Data sources
