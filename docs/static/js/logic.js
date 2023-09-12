@@ -1,5 +1,5 @@
 // API base URL
-let api_url = 'http://127.0.0.1:5000/api/v1.0/'
+let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/'
 
 // Create table of movies
 function movieTable(movies){
