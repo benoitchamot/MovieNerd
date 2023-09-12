@@ -1,5 +1,4 @@
 // API base URL
-// let api_url = 'http://127.0.0.1:5000/api/v1.0/';
 let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
 
 // Global variables
@@ -56,3 +55,5 @@ d3.json(all_actors_url).then(getActors);
 // Call API to get all characters
 let all_characters_url = api_url + 'characters';
 d3.json(all_characters_url).then(getCharacters);
+
+console.log('Ready to rumble...')
