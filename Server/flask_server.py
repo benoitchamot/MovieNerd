@@ -32,7 +32,7 @@ def str_to_date(in_string):
 # Database Setup
 #########################################################
 
-# Create engine to hawaii.sqlite
+# Create engine to movies_db.sqlite
 print("Connecting to database...")
 db_path = Path('movies_db.sqlite')
 engine = create_engine(f"sqlite:///{db_path}")
