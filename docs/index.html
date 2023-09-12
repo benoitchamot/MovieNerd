@@ -5,5 +5,19 @@
     <body>
         <h1>Movies Nerd. Data Nerd.</h1>
         <h2>Select genre</h2>
+        <select id="selGenre" onchange="optionChangedGenre(this.value)"></select>
+
+        <table id="tableMovies">
+            <thead>
+                <th>Title</th>
+                <th>Genre</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- SCRIPTS -->
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="./static/js/logic.js"></script>
     </body>
 </html>
