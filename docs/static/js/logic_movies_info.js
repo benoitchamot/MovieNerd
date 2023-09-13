@@ -6,19 +6,47 @@ let MOVIES = [];
 let selected_genre = "0"
 let selected_actor = "0"
 
-function genreChangedGenre(value){
-// Callback function for genre dropdown menu
-    selected_genre = value;
-    d3.select("#genre").text(value);
-    updateDashboard();
-}
+function displayBubbleChart(movies) {
+    // Display bubble chart
 
-function genreChangedActor(value){
-// Callback function for actor dropdown menu
-    selected_actor = value;
-    d3.select("#actor").text(value);
-    updateDashboard();
-}
+    // Get data in arrays
+    titles = []
+    release = []
+    revenue = []
+
+    for (let i = 0; i<movies.length; i++){
+        titles.push(movies[i]['Title'])
+        release.push(movies[i]['Release Date']);
+        revenue.push(movies[i]['Revenue']);
+    }
+
+    
+        function scaleSize(value) {
+            return Math.sqrt(value)/1000;
+        }
+    
+        // Trace for the OTU data
+        let trace = {
+            x: release,
+            y: revenue,
+            mode: 'markers',
+            marker: {
+              size: revenue.map(index => scaleSize(index)),
+              color: '#ff0000'
+            },
+            text: titles
+          };
+    
+        let layout = {
+            xaxis: {title: {text: 'Release Date'}}
+        }
+    
+        // Data array
+        let data = [trace]
+    
+        // Render the plot to the div tag with id "bubble"
+        Plotly.newPlot("bubbleChart", data, layout)
+    }
 
 function updateDashboard(){
 // Update the dashboard based on the selected filters
@@ -30,8 +58,23 @@ function updateDashboard(){
     
     d3.json(base_url).then(function(data){
         console.log(data);
+        displayBubbleChart(data);
     })
 }
+
+function genreChangedGenre(value){
+    // Callback function for genre dropdown menu
+        selected_genre = value;
+        d3.select("#genre").text(value);
+        updateDashboard();
+    }
+    
+    function genreChangedActor(value){
+    // Callback function for actor dropdown menu
+        selected_actor = value;
+        d3.select("#actor").text(value);
+        updateDashboard();
+    }
 
 function removeDuplicates(arr) {
 // Remove duplicates from an array
@@ -40,8 +83,6 @@ function removeDuplicates(arr) {
 }
 
 function populateDropdown(data) {
-    console.log(data);
-
     let list_genre = []
     let list_actor = []
 
@@ -80,8 +121,7 @@ function populateDropdown(data) {
     }
     
     // Initialise dashboard
-    //genreChangedGenre(data[0].Genre);
-    //genreChangedActor(data[0].Actor);
+    updateDashboard();
 
     
 }
