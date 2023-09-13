@@ -13,20 +13,16 @@
             <a href = info_actors.html>Actors Info</a>
         </div>
 
-        <h2>Select genre</h2>
-        <select id="selGenre" onchange="optionChangedGenre(this.value)"></select>
+        <h2>Movies</h2>
+        <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
+        <select id="selActor" onchange="genreChangedActor(this.value)"></select>
 
-        <table id="tableMovies">
-            <thead>
-                <th>Title</th>
-                <th>Genre</th>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <p id = genre></p>
+        <p id = actor></p>
 
         <!-- SCRIPTS -->
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="./static/js/logic.js"></script>
+        <script src="./static/js/logic_movies_info.js"></script>
     </body>
 </html>

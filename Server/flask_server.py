@@ -96,6 +96,11 @@ def home():
 		f"<p><a href='/api/v1.0/movies/a/Tom%20Cruise'>/api/v1.0/movies/a/&#x003C;actor&#x003E;</a></p>"
 		f"<ul>"
 		f"	<li>Returns all movies for selected actor</li>"
+		f"	<li>Example is given for actor = Tom Cruise</li>"
+		f"</ul>"
+		f"<p><a href='/api/v1.0/movies/a/Tom%20Cruise/g/Action'>/api/v1.0/movies/a/&#x003C;actor&#x003E;/g/&#x003C;genre&#x003E;</a></p>"
+		f"<ul>"
+		f"	<li>Returns all movies for selected actor</li>"
 		f"	<li>Example is given for genre = Tom Cruise</li>"
 		f"</ul>"
 	)
@@ -262,6 +267,49 @@ def api_movies_by_actor(actor):
 	for row in all_movies:   
 		# Check whether the selected actor is in the movie's actor list
 		if actor.replace(" ","").lower() in row.Actors.replace(" ","").lower():
+    		# Add the data to a dictionary
+			mov_dict = {'Id': row.MovieID,
+			   'Title': row.Title,
+			   'MPAA Rating': row.Rated,
+			   'Budget': row.Budget,
+			   'Revenue': row.GrossRevenue,
+			   'Release Date': row.Released,
+			   'Genre': row.Genre,
+			   'Actor': row.Actors,
+			   'Director': row.Director,
+			   'Runtime': row.Runtime,
+			   'Rating': row.imdbRating,
+			   'Rating Count': row.imdbVotes,
+			   'Country': row.Country,
+			   'Metascore': row.Metascore,
+			   'Summary': row.Plot}
+			
+			# Append the data to the list of dictionary
+			movies_dicts.append(mov_dict)
+
+	# Close session
+	session.close()
+
+	if len(movies_dicts) > 0:
+		# Return jsonified dictionary
+		return jsonify(movies_dicts)
+	else:
+		return jsonify({'Error': 'No movie found.'})
+	
+# Dynamic Movies by Actor route
+@app.route("/api/v1.0/movies/a/<actor>/g/<genre>")
+def api_movies_by_actor_and_genre(actor, genre):
+	# Open session to the database
+	session = Session(bind=engine)
+	all_movies = session.query(movies)
+	
+	# Create empty lists
+	movies_dicts = []
+
+	# Loop through the measurements
+	for row in all_movies:   
+		# Check whether the selected actor is in the movie's actor list
+		if (actor.replace(" ","").lower() in row.Actors.replace(" ","").lower()) and (genre.lower() in row.Genre.lower()):
     		# Add the data to a dictionary
 			mov_dict = {'Id': row.MovieID,
 			   'Title': row.Title,
