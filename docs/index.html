@@ -1,32 +1,74 @@
 <!DOCTYPE html>
     <head>
-        <title>Movies Nerd. Data Nerd.</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Movie Nerd. Data Nerd.</title>
+
+         <!-- Bootstrap CSS -->
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+         crossorigin="anonymous">
     </head>
     <body>
-        <div id = 'title'>
-            <h1>Movies Nerd. Data Nerd.</h1>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
+            <div class="container">
+                <a href="#" class="navbar-brand">Movie Nerd. Data Nerd.</a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav">
+                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="info_movies.html" class="nav-item nav-link">Movies Info</a>
+                        <a href="info_actors.html" class="nav-item nav-link">Actors Info</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="p-5 my-4 bg-light rounded-7">
+                <h1>Movies Nerd. Data Nerd.</h1>
+                <p class="lead">All the movies from the database are displayed here. This page does nothing else.</p>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>All Movies</h2>
+                    <table class="table table-hover" id="tableMovies">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Genre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+            </div>
+
+        <hr>
+            <footer>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Created by MONU-DA-P3-G7</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        Source: <a href="https://github.com/benoitchamot/MONU_project3" class="text-dark">GitHub</a>
+                    </div>
+                </div>
+            </footer>
         </div>
-
-        <div id = 'menu'>
-            <a href = index.html>Home</a> | 
-            <a href = info_movies.html>Movies Info</a> | 
-            <a href = info_actors.html>Actors Info</a>
-        </div>
-
-        <h2>Select genre</h2>
-        <select id="selGenre" onchange="optionChangedGenre(this.value)"></select>
-
-        <table id="tableMovies">
-            <thead>
-                <th>Title</th>
-                <th>Genre</th>
-            </thead>
-            <tbody></tbody>
-        </table>
 
         <!-- SCRIPTS -->
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <script src="./static/js/logic.js"></script>
+
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     </body>
 </html>
