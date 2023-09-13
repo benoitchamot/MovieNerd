@@ -54,7 +54,7 @@ except Exception as inst:
     quit()
 
 # Save references to each table
-movies = Base.classes.movies
+movies = Base.classes.omdb_movies
 actors = Base.classes.actor
 characters = Base.classes.character
 
@@ -65,7 +65,7 @@ app = Flask(__name__)
 CORS(app)
 
 #########################################################
-# Flask Routes
+# Flask Static Routes
 #########################################################
 
 # Default route
@@ -87,17 +87,22 @@ def home():
 		f"<ul>"
 		f"	<li>Returns data for all characters</li>"
 		f"</ul>"
-		# f"<h2>Dynamic routes</h2>"
-		# f"<p><a href='http://127.0.0.1:5000/api/v1.0/u/1503960366'>/api/v1.0/u/&#x003C;user_name&#x003E;</a></p>"
-		# f"<ul>"
-		# f"	<li>Returns all data for selected user</li>"
-		# f"	<li>Example is given for user_name = 1503960366</li>"
-		# f"</ul>"
+		f"<h2>Dynamic routes</h2>"
+		f"<p><a href='/api/v1.0/movies/g/Action'>/api/v1.0/movies/g/&#x003C;genre&#x003E;</a></p>"
+		f"<ul>"
+		f"	<li>Returns all movies for selected genre</li>"
+		f"	<li>Example is given for genre = Action</li>"
+		f"</ul>"
+		f"<p><a href='/api/v1.0/movies/a/Tom%20Cruise'>/api/v1.0/movies/a/&#x003C;actor&#x003E;</a></p>"
+		f"<ul>"
+		f"	<li>Returns all movies for selected actor</li>"
+		f"	<li>Example is given for genre = Tom Cruise</li>"
+		f"</ul>"
 	)
 
 # Static Movies route
 @app.route("/api/v1.0/movies")
-def api_activities():
+def api_movies():
 	# Open session to the database
 	session = Session(bind=engine)
 	all_movies = session.query(movies)
@@ -108,17 +113,21 @@ def api_activities():
 	# Loop through the measurements
 	for row in all_movies:    
     	# Add the data to a dictionary
-		mov_dict = {'Id': row.movieid,
-			  'Title': row.title,
-			  'MPAA Rating': row.mpaa_rating,
-			  'Budget': row.budget,
-			  'Revenue': row.gross,
-			  'Release Date': row.release_date,
-			  'Genre': row.genre,
-			  'Runtime': row.runtime,
-			  'Rating': row.rating,
-			  'Rating Count': row.rating_count,
-			  'Summary': row.summary}
+		mov_dict = {'Id': row.MovieID,
+			  'Title': row.Title,
+			  'MPAA Rating': row.Rated,
+			  'Budget': row.Budget,
+			  'Revenue': row.GrossRevenue,
+			  'Release Date': row.Released,
+			  'Genre': row.Genre,
+			  'Actor': row.Actors,
+			  'Director': row.Director,
+			  'Runtime': row.Runtime,
+			  'Rating': row.imdbRating,
+			  'Rating Count': row.imdbVotes,
+			  'Country': row.Country,
+			  'Metascore': row.Metascore,
+			  'Summary': row.Plot}
 
 		# Append the data to the list of dictionary
 		movies_dicts.append(mov_dict)
@@ -126,8 +135,11 @@ def api_activities():
 	# Close session
 	session.close()
 
-	# Return jsonified dictionary
-	return jsonify(movies_dicts)
+	if len(movies_dicts) > 0:
+		# Return jsonified dictionary
+		return jsonify(movies_dicts)
+	else:
+		return jsonify({'Error': 'No movie found.'})
 
 # Static Actors route
 @app.route("/api/v1.0/actors")
@@ -188,6 +200,96 @@ def api_characters():
 
 	# Return jsonified dictionary
 	return jsonify(characters_dicts)
+
+#########################################################
+# Flask Dynamic Routes
+#########################################################
+
+# Dynamic Movies by Genre route
+@app.route("/api/v1.0/movies/g/<genre>")
+def api_movies_by_genre(genre):
+	# Open session to the database
+	session = Session(bind=engine)
+	all_movies = session.query(movies)
+	
+	# Create empty lists
+	movies_dicts = []
+
+	# Loop through the measurements
+	for row in all_movies:   
+		# Check whether the selected genre is in the movie's genre
+		if genre.lower() in row.Genre.lower():
+    		# Add the data to a dictionary
+			mov_dict = {'Id': row.MovieID,
+			   'Title': row.Title,
+			   'MPAA Rating': row.Rated,
+			   'Budget': row.Budget,
+			   'Revenue': row.GrossRevenue,
+			   'Release Date': row.Released,
+			   'Genre': row.Genre,
+			   'Actor': row.Actors,
+			   'Director': row.Director,
+			   'Runtime': row.Runtime,
+			   'Rating': row.imdbRating,
+			   'Rating Count': row.imdbVotes,
+			   'Country': row.Country,
+			   'Metascore': row.Metascore,
+			   'Summary': row.Plot}
+			
+			# Append the data to the list of dictionary
+			movies_dicts.append(mov_dict)
+
+	# Close session
+	session.close()
+
+	if len(movies_dicts) > 0:
+		# Return jsonified dictionary
+		return jsonify(movies_dicts)
+	else:
+		return jsonify({'Error': 'No movie found.'})
+	
+# Dynamic Movies by Actor route
+@app.route("/api/v1.0/movies/a/<actor>")
+def api_movies_by_actor(actor):
+	# Open session to the database
+	session = Session(bind=engine)
+	all_movies = session.query(movies)
+	
+	# Create empty lists
+	movies_dicts = []
+
+	# Loop through the measurements
+	for row in all_movies:   
+		# Check whether the selected actor is in the movie's actor list
+		if actor.replace(" ","").lower() in row.Actors.replace(" ","").lower():
+    		# Add the data to a dictionary
+			mov_dict = {'Id': row.MovieID,
+			   'Title': row.Title,
+			   'MPAA Rating': row.Rated,
+			   'Budget': row.Budget,
+			   'Revenue': row.GrossRevenue,
+			   'Release Date': row.Released,
+			   'Genre': row.Genre,
+			   'Actor': row.Actors,
+			   'Director': row.Director,
+			   'Runtime': row.Runtime,
+			   'Rating': row.imdbRating,
+			   'Rating Count': row.imdbVotes,
+			   'Country': row.Country,
+			   'Metascore': row.Metascore,
+			   'Summary': row.Plot}
+			
+			# Append the data to the list of dictionary
+			movies_dicts.append(mov_dict)
+
+	# Close session
+	session.close()
+
+	if len(movies_dicts) > 0:
+		# Return jsonified dictionary
+		return jsonify(movies_dicts)
+	else:
+		return jsonify({'Error': 'No movie found.'})
 
 #########################################################
 # Run App
