@@ -34,16 +34,21 @@
 
         <div class="container">
             <div class="p-5 my-4 bg-light rounded-7">
-                <h1>Gender Net Worth Gap for Actors</h1>
+                <h1>Gender Wealth Gap for Actors</h1>
                 <p class="lead">How rich are the Top 10 wealthiest male and female actors? How do they differ?</p>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h2>Filters</h2>
-                    <p>These are the example.</p>
-                    <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
-                    <select id="selActor" onchange="genreChangedActor(this.value)"></select>
+                    <h2>Options</h2>
+                    <p>Select how many results to display</p>
+                    <select id="selGenre" onchange="TopNSelect(this.value)">
+                        <option value=5>Top 5</option>
+                        <option value=10>Top 10</option>
+                        <option value=20>Top 20</option>
+                        <option value=50>Top 50</option>
+                        <option value=100>Top 100</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <h2>Selection</h2>

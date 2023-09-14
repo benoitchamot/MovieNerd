@@ -2,6 +2,18 @@
 // Run Flask server first: python flash_server.py
 let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
 
+// Global variable
+let top_N = 5;
+let all_male_actor = {}
+let all_female_actor = {}
+let top_male_actor = {}
+let top_female_actor = {}
+
+function TopNSelect(value) {
+    top_N = value;
+    updateDashboard();
+}
+
 function plotNetworth(actors, div_name) {
     // Trace for the OTU data
     let trace = {
@@ -18,6 +30,19 @@ function plotNetworth(actors, div_name) {
 
     // Render the plot to the div tag with id "bubble"
     Plotly.newPlot(div_name, data)
+}
+
+// Update charts
+function updateDashboard(){
+    // Slice data to get Top N actors
+    top_female_actor['Name'] = all_female_actor['Name'].slice(0,top_N);
+    top_female_actor['Networth'] = all_female_actor['Networth'].slice(0,top_N);
+    top_male_actor['Name'] = all_male_actor['Name'].slice(0,top_N);
+    top_male_actor['Networth'] = all_male_actor['Networth'].slice(0,top_N);
+
+    // Plot data
+    plotNetworth(top_female_actor, "networth_female");
+    plotNetworth(top_male_actor, "networth_male");
 }
 
 function payGapAnalysis(actors) {
@@ -73,18 +98,12 @@ function payGapAnalysis(actors) {
     male_actors['Name'] = male_actors['Name'].slice(1,male_actors['Name'].length);
     male_actors['Networth'] = male_actors['Networth'].slice(1,male_actors['Networth'].length);
 
-    // Define Top N to display (10 = Top 10)
-    top_N = 10;
+    // Assign to global variables
+    all_male_actor = male_actors;
+    all_female_actor = female_actors;
 
-    // Slice data to get Top N
-    female_actors['Name'] = female_actors['Name'].slice(0,top_N);
-    female_actors['Networth'] = female_actors['Networth'].slice(0,top_N);
-    male_actors['Name'] = male_actors['Name'].slice(0,top_N);
-    male_actors['Networth'] = male_actors['Networth'].slice(0,top_N);
-
-    // Plot data
-    plotNetworth(female_actors, "networth_female");
-    plotNetworth(male_actors, "networth_male");
+    // Update charts
+    updateDashboard();
 }
 
 // Get all actors from the API
