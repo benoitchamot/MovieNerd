@@ -15,6 +15,9 @@ from pathlib import Path
 # CORS
 from flask_cors import CORS
 
+# Local modules
+from actor_ratings import get_actor_rating
+
 #########################################################
 # Functions
 #########################################################
@@ -87,6 +90,10 @@ def home():
 		f"<ul>"
 		f"	<li>Returns data for all characters</li>"
 		f"</ul>"
+		f"<p><a href='api/v1.0/actors_ratings'>/api/v1.0/actors_ratings</a></p>"
+		f"<ul>"
+		f"	<li>Returns average IMDB rating for all actors</li>"
+		f"</ul>"
 		f"<h2>Dynamic routes</h2>"
 		f"<p><a href='/api/v1.0/movies/g/Action'>/api/v1.0/movies/g/&#x003C;genre&#x003E;</a></p>"
 		f"<ul>"
@@ -145,6 +152,42 @@ def api_movies():
 		return jsonify(movies_dicts)
 	else:
 		return jsonify({'Error': 'No movie found.'})
+
+# Static Actor Ratings route
+@app.route("/api/v1.0/actors_ratings")
+def api_actors_ratings():
+	# Open session to the database
+	session = Session(bind=engine)
+	all_movies = session.query(movies)
+
+	print("\n========")
+
+	# Create empty lists
+	movies_dicts = []
+	
+	for row in all_movies:
+		# Add the data to a dictionary
+		mov_dict = {'Title': row.Title,
+			  'Genre': row.Genre,
+			  'Director': row.Director,
+			  'Actors': row.Actors,
+			  'imdbRating': row.imdbRating,
+			  'imdbVotes': row.imdbVotes}
+
+		# Append the data to the list of dictionary
+		movies_dicts.append(mov_dict)
+
+	movies_df = pd.DataFrame(movies_dicts)
+
+	# Get a DataFrame of all the actors and their average rating
+	ratings = get_actor_rating(movies_df)
+	ratings = ratings.to_dict()
+
+	# Close session
+	session.close()
+
+	return jsonify(ratings)
+
 
 # Static Actors route
 @app.route("/api/v1.0/actors")
