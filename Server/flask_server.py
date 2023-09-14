@@ -338,6 +338,12 @@ def api_movies_by_actor_and_genre(actor, genre):
 		return jsonify(movies_dicts)
 	else:
 		return jsonify({'Error': 'No movie found.'})
+	
+#########################################################
+# GEOjson Route
+#########################################################
+
+
 
 #########################################################
 # Run App
