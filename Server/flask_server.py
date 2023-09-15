@@ -334,7 +334,7 @@ def api_keywords_by_genre(genre):
 			movies_dicts.append(mov_dict)
 
 	movies_df = pd.DataFrame(movies_dicts)
-	keywords = get_top50_keywords(movies_df).to_dict()
+	keywords = get_top50_keywords(movies_df).to_dict('list')
 
 	# Close session
 	session.close()

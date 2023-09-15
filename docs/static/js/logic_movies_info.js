@@ -1,53 +1,71 @@
 // API base URL
 let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
+//let api_url = 'http://127.0.0.1:5000/api/v1.0/'
 
 // Global variables
 let MOVIES = [];
 let selected_genre = "0"
 let selected_actor = "0"
 
+function displayWOrdCloud(keywords) {
+
+    // Trace for the movie revenue per year
+    let trace = {
+        x: keywords.word.slice(0,40),
+        y: keywords.count.slice(0,40),
+        type: 'bar',
+        marker: {
+            color: '#9B2915'
+        }
+    };
+    
+    // Data array
+    let data = [trace]
+    
+    // Render the plot to the div tag with id "bubble"
+    Plotly.newPlot("wordCloud", data)
+}
+
 function displayBubbleChart(movies) {
     // Display bubble chart
 
     // Get data in arrays
-    titles = []
-    release = []
-    revenue = []
+    let titles = []
+    let release = []
+    let revenue = []
 
     for (let i = 0; i<movies.length; i++){
         titles.push(movies[i]['Title'])
-        console.log(`Date string: ${movies[i]['Release Date']}`)
         release.push(com_convertStringToYear(movies[i]['Release Date']));
         revenue.push(movies[i]['Revenue']);
     }
 
-    
-        function scaleSize(value) {
-            return Math.sqrt(value)/1000;
-        }
-    
-        // Trace for the OTU data
-        let trace = {
-            x: release,
-            y: revenue,
-            mode: 'markers',
-            marker: {
-              size: revenue.map(index => scaleSize(index)),
-              color: '#00FF00'
-            },
-            text: titles
-          };
-    
-        let layout = {
-            xaxis: {title: {text: 'Release Date'}}
-        }
-    
-        // Data array
-        let data = [trace]
-    
-        // Render the plot to the div tag with id "bubble"
-        Plotly.newPlot("bubbleChart", data, layout)
+    function scaleSize(value) {
+        return Math.sqrt(value)/1000;
     }
+    
+    // Trace for the movie revenue per year
+    let trace = {
+        x: release,
+        y: revenue,
+        mode: 'markers',
+        marker: {
+            size: revenue.map(index => scaleSize(index)),
+            color: '#9B2915'
+        },
+        text: titles
+    };
+    
+    let layout = {
+        xaxis: {title: {text: 'Release Year'}}
+    }
+    
+    // Data array
+    let data = [trace]
+    
+    // Render the plot to the div tag with id "bubble"
+    Plotly.newPlot("bubbleChart", data, layout)
+}
 
 function updateDashboard(){
 // Update the dashboard based on the selected filters
@@ -55,10 +73,27 @@ function updateDashboard(){
     if (selected_actor != '0'){base_url += '/a/' + selected_actor;}
     if (selected_genre != '0'){base_url += '/g/' + selected_genre;}
 
+    // Print the URL for debug purposes
     console.log(base_url);
     
     d3.json(base_url).then(function(data){
         displayBubbleChart(data);
+    })
+
+    // Get the Top 50 keywords for the selected genre
+    let keyword_url = api_url + 'keywords/g/'
+    if (selected_genre == '0') {
+        keyword_url += 'all';
+    }
+    else {
+        keyword_url += selected_genre;
+    }
+
+    // Print the URL for debug purposes
+    console.log(keyword_url);
+
+    d3.json(keyword_url).then(function(data){
+        displayWOrdCloud(data);
     })
 }
 

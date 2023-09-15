@@ -2,6 +2,31 @@
 import pandas as pd
 from collections import Counter
 
+def ignore_words_list():
+    words_conjonctions = ['and', 'but', 'because', 'or', 'when',
+                          'while', 'for', 'nor', 'yet', 'so',
+                          'whether', 'either', 'neither', 'as',
+                          'if', 'then', 'than', 'rather', 'such',
+                          'after', 'what', 'how', 'why', 'that',
+                          'who']
+    
+    words_prepositions = ['to', 'of', 'with', 'from','into', 'after',
+                          'before', 'in', 'out', 'on', 'at', 'by',
+                          'between']
+
+    words_determiners = ['a', 'an', 'the']
+
+    words_verbs = ['is', 'are', 'must', 'be', 'have', 'has', 'will',
+                   'do', 'did', 'himself', 'herself', 'themselves',
+                   'can']
+
+    words_pronouns = ['he', 'him', 'his', 'she', 'her', 'they', 'them',
+                      'their', 'it', 'its', 'hes']
+
+    words_names = ['dominic', 'james', 'bond']
+    
+    return words_conjonctions + words_prepositions + words_determiners + words_pronouns + words_verbs + words_names
+
 # Source: https://www.geeksforgeeks.org/text-analysis-in-python-3/
 def count_words(text):     
     text = text.lower() 
@@ -30,7 +55,7 @@ def get_top50_keywords(movies_df):
     word_count_df = word_count_df[['word', 'count']]
 
     # Drop common words
-    ignore_words = ['the', 'a', 'to', 'and', 'of', 'by', 'his', 'in', 'is', 'are', 'a', 'an', 'with', 'from', 'when', 'as', 'on', 'for', ' ', '', 'who', 'at']
+    ignore_words = ignore_words_list()
 
     clean_word_count_df = word_count_df[:]
 

@@ -9,9 +9,11 @@
          rel="stylesheet"
          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
          crossorigin="anonymous">
+
+         <link href="static/css/style.css" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container">
                 <a href="#" class="navbar-brand">Movie Nerd. Data Nerd.</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -32,8 +34,8 @@
             </div>
         </nav>
 
-        <div class="container">
-            <div class="p-5 my-4 bg-light rounded-7">
+        <div id="body-container" class="container">
+            <div class="p-5 my-0 bg-light rounded-7">
                 <h1>Movies Info</h1>
                 <p class="lead">Select one genre and one actor to display a subset of the movies and learn more about them.</p>
             </div>
@@ -45,22 +47,9 @@
                     <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
                     <select id="selActor" onchange="genreChangedActor(this.value)"></select>
                 </div>
-                <div class="col-md-4">
-                    <h2>Selection</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Genre</th>
-                                <th>Actor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id = "genre"></td>
-                                <td id = "actor"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-md-8">
+                    <h2>Keywords for Selected Genre</h2>
+                    <div id = "wordCloud"></div>
                 </div>
             </div>
 
@@ -70,10 +59,11 @@
                     <div id = "bubbleChart"></div>
                 </div>
             </div>
+        </div>
 
 
-
-            <hr>
+        
+        <div id="footer-container" class="container">
             <footer>
                 <div class="row">
                     <div class="col-md-6">
