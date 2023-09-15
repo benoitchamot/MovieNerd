@@ -18,6 +18,7 @@ function movieTable(movies){
 
         // Append one cell for the movie title
         new_tr.append("td").text(movie.Title);
+        new_tr.append("td").text(movie['Release Date']);
         new_tr.append("td").text(movie.Genre);
     }
 }

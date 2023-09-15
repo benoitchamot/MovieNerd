@@ -9,11 +9,9 @@ from flask import Flask, jsonify
 import numpy as np
 import pandas as pd
 import datetime as dt
-import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
-from sqlalchemy import desc
+from sqlalchemy import create_engine, func, desc
 from pathlib import Path
 
 # CORS
@@ -23,6 +21,7 @@ from flask_cors import CORS
 from actor_ratings import get_actor_rating
 from country_networth_geojson import get_networth_by_country
 from director_ratings_genre import get_director_rating
+from genre_keywords import get_top50_keywords
 
 #########################################################
 # Functions
@@ -36,6 +35,24 @@ def str_to_date(in_string):
 		return dt.date(out_date.year, out_date.month, out_date.day)
 	except:
 		return 0
+	
+def create_movie_dict(movie):
+# Create a dictionary from a row from the omdb_movies table in movies_db.sqlite
+	return {'Id': movie.MovieID,
+			   'Title': movie.Title,
+			   'MPAA Rating': movie.Rated,
+			   'Budget': movie.Budget,
+			   'Revenue': movie.GrossRevenue,
+			   'Release Date': movie.Released,
+			   'Genre': movie.Genre,
+			   'Actor': movie.Actors,
+			   'Director': movie.Director,
+			   'Runtime': movie.Runtime,
+			   'Rating': movie.imdbRating,
+			   'Rating Count': movie.imdbVotes,
+			   'Country': movie.Country,
+			   'Metascore': movie.Metascore,
+			   'Summary': movie.Plot}
 
 #########################################################
 # Database Setup
@@ -121,8 +138,13 @@ def home():
 		f"</ul>"
 		f"<p><a href='/api/v1.0/movies/a/Tom%20Cruise/g/Action'>/api/v1.0/movies/a/&#x003C;actor&#x003E;/g/&#x003C;genre&#x003E;</a></p>"
 		f"<ul>"
-		f"	<li>Returns all movies for selected actor</li>"
-		f"	<li>Example is given for genre = Tom Cruise</li>"
+		f"	<li>Returns all movies for selected actor and genre</li>"
+		f"	<li>Example is given for genre = Action and actor = Tom Cruise</li>"
+		f"</ul>"
+		f"<p><a href='/api/v1.0/keywords/g/action'>/api/v1.0/keywords/g/&#x003C;genre&#x003E;</a></p>"
+		f"<ul>"
+		f"	<li>Returns top 50 keywords with count for selected genre</li>"
+		f"	<li>Example is given for genre = Action</li>"
 		f"</ul>"
 	)
 
@@ -139,21 +161,7 @@ def api_movies():
 	# Loop through the measurements
 	for row in all_movies:    
     	# Add the data to a dictionary
-		mov_dict = {'Id': row.MovieID,
-			  'Title': row.Title,
-			  'MPAA Rating': row.Rated,
-			  'Budget': row.Budget,
-			  'Revenue': row.GrossRevenue,
-			  'Release Date': row.Released,
-			  'Genre': row.Genre,
-			  'Actor': row.Actors,
-			  'Director': row.Director,
-			  'Runtime': row.Runtime,
-			  'Rating': row.imdbRating,
-			  'Rating Count': row.imdbVotes,
-			  'Country': row.Country,
-			  'Metascore': row.Metascore,
-			  'Summary': row.Plot}
+		mov_dict = create_movie_dict(row)
 
 		# Append the data to the list of dictionary
 		movies_dicts.append(mov_dict)
@@ -173,8 +181,6 @@ def api_actors_ratings():
 	# Open session to the database
 	session = Session(bind=engine)
 	all_movies = session.query(movies)
-
-	print("\n========")
 
 	# Create empty lists
 	movies_dicts = []
@@ -293,21 +299,7 @@ def api_movies_by_genre(genre):
 		# Check whether the selected genre is in the movie's genre
 		if genre.lower() in row.Genre.lower():
     		# Add the data to a dictionary
-			mov_dict = {'Id': row.MovieID,
-			   'Title': row.Title,
-			   'MPAA Rating': row.Rated,
-			   'Budget': row.Budget,
-			   'Revenue': row.GrossRevenue,
-			   'Release Date': row.Released,
-			   'Genre': row.Genre,
-			   'Actor': row.Actors,
-			   'Director': row.Director,
-			   'Runtime': row.Runtime,
-			   'Rating': row.imdbRating,
-			   'Rating Count': row.imdbVotes,
-			   'Country': row.Country,
-			   'Metascore': row.Metascore,
-			   'Summary': row.Plot}
+			mov_dict = create_movie_dict(row)
 			
 			# Append the data to the list of dictionary
 			movies_dicts.append(mov_dict)
@@ -320,6 +312,34 @@ def api_movies_by_genre(genre):
 		return jsonify(movies_dicts)
 	else:
 		return jsonify({'Error': 'No movie found.'})
+	
+# Dynamic Words by Genre route
+@app.route("/api/v1.0/keywords/g/<genre>")
+def api_keywords_by_genre(genre):
+	# Open session to the database
+	session = Session(bind=engine)
+	all_movies = session.query(movies)
+	
+	# Create empty lists
+	movies_dicts = []
+
+	# Loop through the movies
+	for row in all_movies:   
+		# Check whether the selected genre is in the movie's genre (or if the genre is specified as 'all')
+		if (genre.lower() == 'all') or (genre.lower() in row.Genre.lower()):
+    		# Add the data to a dictionary
+			mov_dict = create_movie_dict(row)
+			
+			# Append the data to the list of dictionary
+			movies_dicts.append(mov_dict)
+
+	movies_df = pd.DataFrame(movies_dicts)
+	keywords = get_top50_keywords(movies_df).to_dict()
+
+	# Close session
+	session.close()
+
+	return jsonify(keywords)
 	
 # Dynamic Movies by Actor route
 @app.route("/api/v1.0/movies/a/<actor>")
@@ -336,21 +356,7 @@ def api_movies_by_actor(actor):
 		# Check whether the selected actor is in the movie's actor list
 		if actor.replace(" ","").lower() in row.Actors.replace(" ","").lower():
     		# Add the data to a dictionary
-			mov_dict = {'Id': row.MovieID,
-			   'Title': row.Title,
-			   'MPAA Rating': row.Rated,
-			   'Budget': row.Budget,
-			   'Revenue': row.GrossRevenue,
-			   'Release Date': row.Released,
-			   'Genre': row.Genre,
-			   'Actor': row.Actors,
-			   'Director': row.Director,
-			   'Runtime': row.Runtime,
-			   'Rating': row.imdbRating,
-			   'Rating Count': row.imdbVotes,
-			   'Country': row.Country,
-			   'Metascore': row.Metascore,
-			   'Summary': row.Plot}
+			mov_dict = create_movie_dict(row)
 			
 			# Append the data to the list of dictionary
 			movies_dicts.append(mov_dict)
@@ -364,7 +370,7 @@ def api_movies_by_actor(actor):
 	else:
 		return jsonify({'Error': 'No movie found.'})
 	
-# Dynamic Movies by Actor route
+# Dynamic Movies by Actor and Genre route
 @app.route("/api/v1.0/movies/a/<actor>/g/<genre>")
 def api_movies_by_actor_and_genre(actor, genre):
 	# Open session to the database
@@ -379,21 +385,7 @@ def api_movies_by_actor_and_genre(actor, genre):
 		# Check whether the selected actor is in the movie's actor list
 		if (actor.replace(" ","").lower() in row.Actors.replace(" ","").lower()) and (genre.lower() in row.Genre.lower()):
     		# Add the data to a dictionary
-			mov_dict = {'Id': row.MovieID,
-			   'Title': row.Title,
-			   'MPAA Rating': row.Rated,
-			   'Budget': row.Budget,
-			   'Revenue': row.GrossRevenue,
-			   'Release Date': row.Released,
-			   'Genre': row.Genre,
-			   'Actor': row.Actors,
-			   'Director': row.Director,
-			   'Runtime': row.Runtime,
-			   'Rating': row.imdbRating,
-			   'Rating Count': row.imdbVotes,
-			   'Country': row.Country,
-			   'Metascore': row.Metascore,
-			   'Summary': row.Plot}
+			mov_dict = create_movie_dict(row)
 			
 			# Append the data to the list of dictionary
 			movies_dicts.append(mov_dict)
@@ -414,7 +406,7 @@ def api_movies_by_actor_and_genre(actor, genre):
 def api_geojson():
 
 	# Calling local function for data preperation of this section
-	actor_master = get_networth_by_country()
+	actor_master = get_networth_by_country(db_path)
 
 	# Defining function to convert df to geojson
 	def df_to_geojson(df, properties, lat='Lat', lon='Lon'):

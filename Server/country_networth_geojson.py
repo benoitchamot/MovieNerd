@@ -2,7 +2,7 @@
 ### Function for actors average networth per country ###
 ########################################################
 
-def get_networth_by_country():
+def get_networth_by_country(db_path):
 
     # Dependencies and Setup
     import pandas as pd
@@ -10,7 +10,7 @@ def get_networth_by_country():
     import sqlite3
 
     # Creating db connection
-    cnx = sqlite3.connect('movies_db.sqlite')
+    cnx = sqlite3.connect(db_path)
 
     # Reading data from sqlite database table
     actor_df = pd.read_sql_query("SELECT * FROM actor", cnx)

@@ -16,7 +16,8 @@ function displayBubbleChart(movies) {
 
     for (let i = 0; i<movies.length; i++){
         titles.push(movies[i]['Title'])
-        release.push(movies[i]['Release Date']);
+        console.log(`Date string: ${movies[i]['Release Date']}`)
+        release.push(com_convertStringToYear(movies[i]['Release Date']));
         revenue.push(movies[i]['Revenue']);
     }
 
@@ -32,7 +33,7 @@ function displayBubbleChart(movies) {
             mode: 'markers',
             marker: {
               size: revenue.map(index => scaleSize(index)),
-              color: '#ff0000'
+              color: '#00FF00'
             },
             text: titles
           };
@@ -57,7 +58,6 @@ function updateDashboard(){
     console.log(base_url);
     
     d3.json(base_url).then(function(data){
-        console.log(data);
         displayBubbleChart(data);
     })
 }
