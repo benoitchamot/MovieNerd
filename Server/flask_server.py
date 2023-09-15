@@ -17,6 +17,8 @@ from flask_cors import CORS
 
 # Local modules
 from actor_ratings import get_actor_rating
+from country_networth_geojson import get_networth_by_country
+from director_ratings_genre import get_director_rating
 
 #########################################################
 # Functions
@@ -93,6 +95,14 @@ def home():
 		f"<p><a href='api/v1.0/actors_ratings'>/api/v1.0/actors_ratings</a></p>"
 		f"<ul>"
 		f"	<li>Returns average IMDB rating for all actors</li>"
+		f"</ul>"
+		f"<p><a href='api/v1.0/director_ratings'>/api/v1.0/director_ratings</a></p>"
+		f"<ul>"
+		f"	<li>Returns average IMDB ratings for all directors</li>"
+		f"</ul>"
+		f"<p><a href='api/v1.0/country_actor_networth_geojson'>/api/v1.0/country_actor_networth_geojson</a></p>"
+		f"<ul>"
+		f"	<li>Returns geojson data for average networth of actors by country of origin</li>"
 		f"</ul>"
 		f"<h2>Dynamic routes</h2>"
 		f"<p><a href='/api/v1.0/movies/g/Action'>/api/v1.0/movies/g/&#x003C;genre&#x003E;</a></p>"
@@ -249,6 +259,17 @@ def api_characters():
 	# Return jsonified dictionary
 	return jsonify(characters_dicts)
 
+# Static Director Ratings route
+@app.route("/api/v1.0/director_ratings")
+def api_director_ratings():
+
+	# Calling local function for data preperation of this section
+	genre_director_rating = get_director_rating()
+	genre_director_rating = genre_director_rating.to_dict()
+
+	# Close session
+	return jsonify(genre_director_rating)
+
 #########################################################
 # Flask Dynamic Routes
 #########################################################
@@ -385,8 +406,36 @@ def api_movies_by_actor_and_genre(actor, genre):
 #########################################################
 # GEOjson Route
 #########################################################
+@app.route("/api/v1.0/country_actor_networth_geojson")
+def api_geojson():
 
+	# Calling local function for data preperation of this section
+	actor_master = get_networth_by_country()
 
+	# Defining function to convert df to geojson
+	def df_to_geojson(df, properties, lat='Lat', lon='Lon'):
+		geojson = {'type':'FeatureCollection', 'features':[]}
+		for _, row in df.iterrows():
+			feature = {'type':'Feature',
+					'properties':{},
+					'geometry':{'type':'Point',
+								'coordinates':[]}}
+			feature['geometry']['coordinates'] = [row[lon],row[lat]]
+			for prop in properties:
+				feature['properties'][prop] = row[prop]
+			geojson['features'].append(feature)
+		return geojson
+
+	# Passing the function a DataFrame, a list of columns to convert to GeoJSON feature properties
+	# and which columns contain the latitude and longitude data. 
+
+	cols = ['Country', 'Average_networth', 'Total_actors',
+		'Min_networth', 'Max_networth', 'Median_networth',
+		'Top_actors', 'Top_actors_networth', 'city']
+	geojson = df_to_geojson(actor_master, cols)
+
+	# Return jsonified dictionary
+	return (geojson)
 
 #########################################################
 # Run App
