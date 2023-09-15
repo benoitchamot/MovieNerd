@@ -1,3 +1,7 @@
+DB_PATH = 'movies_db.sqlite'
+# Uncomment for web version:
+# DB_PATH = '/home/spiderdwarf/mysite/movies_db.sqlite'
+
 #########################################################
 # Dependencies
 #########################################################
@@ -37,7 +41,7 @@ def str_to_date(in_string):
 
 # Create engine to movies_db.sqlite
 print("Connecting to database...")
-db_path = Path('movies_db.sqlite')
+db_path = Path(DB_PATH)
 engine = create_engine(f"sqlite:///{db_path}")
 print("Connected.")
 
