@@ -1,5 +1,7 @@
 # Dependencies
-import pandas
+import pandas as pd
+import warnings
+warnings.simplefilter(action='ignore')
 
 def get_actor_rating(omdb_df):
 # Get a DataFrame of all the actors and their average rating
@@ -24,4 +26,11 @@ def get_actor_rating(omdb_df):
     actor_avg_rating = actor_avg_rating.groupby('Actor')
     actor_avg_rating = actor_avg_rating.mean().reset_index()
 
-    return actor_avg_rating
+    # Calculating the number of movies an actor played in and selecting top 10 actors who played in the biggest amount of movies
+    actor_count_movies = actors_stacked_df['Actor'].value_counts()
+    actor_count_movies = pd.DataFrame(actor_count_movies)
+    actor_count_movies  = actor_count_movies.rename(columns={"Actor": "Count of movies"})
+    actor_count_movies  = actor_count_movies.rename_axis('Actor')
+    actors_movies_ratings = pd.merge(actor_avg_rating, actor_count_movies , on="Actor")
+
+    return actors_movies_ratings

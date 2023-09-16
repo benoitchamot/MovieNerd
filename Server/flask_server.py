@@ -1,6 +1,9 @@
-DB_PATH = 'movies_db.sqlite'
-# Uncomment for web version:
-# DB_PATH = '/home/spiderdwarf/mysite/movies_db.sqlite'
+run_local = True
+
+if run_local:
+	DB_PATH = 'movies_db.sqlite'
+else:
+	DB_PATH = '/home/spiderdwarf/mysite/movies_db.sqlite'
 
 #########################################################
 # Dependencies
@@ -22,6 +25,10 @@ from actor_ratings import get_actor_rating
 from country_networth_geojson import get_networth_by_country
 from director_ratings_genre import get_director_rating
 from genre_keywords import get_top50_keywords
+
+# Ignore warnings
+import warnings
+warnings.simplefilter(action='ignore')
 
 #########################################################
 # Functions
@@ -115,7 +122,7 @@ def home():
 		f"</ul>"
 		f"<p><a href='api/v1.0/actors_ratings'>/api/v1.0/actors_ratings</a></p>"
 		f"<ul>"
-		f"	<li>Returns average IMDB rating for all actors</li>"
+		f"	<li>Returns average IMDB rating and networth for all actors</li>"
 		f"</ul>"
 		f"<p><a href='api/v1.0/director_ratings'>/api/v1.0/director_ratings</a></p>"
 		f"<ul>"
@@ -433,8 +440,9 @@ def api_geojson():
 	# Return jsonified dictionary
 	return (geojson)
 
-#########################################################
-# Run App
-#########################################################
-if __name__ == "__main__":
-	app.run(debug=True)
+if run_local:
+	#########################################################
+	# Run App
+	#########################################################
+	if __name__ == "__main__":
+		app.run(debug=True)
