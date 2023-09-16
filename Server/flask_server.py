@@ -312,7 +312,7 @@ def api_characters():
 def api_director_ratings():
 
 	# Calling local function for data preperation of this section
-	genre_director_rating = get_director_rating()
+	genre_director_rating = get_director_rating(db_path)
 	genre_director_rating = genre_director_rating.to_dict()
 
 	# Close session

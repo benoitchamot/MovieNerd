@@ -33,8 +33,6 @@ def get_actor_rating(omdb_df, actor_df):
     actor_count_movies  = actor_count_movies.rename_axis('Actor')
     actors_movies_ratings = pd.merge(actor_avg_rating, actor_count_movies , on="Actor")
 
-    print(actor_df.columns)
-
     actors_movies_ratings = pd.merge(actors_movies_ratings, actor_df, left_on=['Actor'], right_on=['Name'])
     actors_movies_ratings = actors_movies_ratings[['Actor', 'Count of movies', 'Net worth', 'imdbRating']]
 

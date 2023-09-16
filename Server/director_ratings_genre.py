@@ -2,14 +2,14 @@
 ### Function for directors average networth  ###
 ################################################
 
-def get_director_rating():
+def get_director_rating(db_path):
 
     # Dependencies and Setup
     import pandas as pd
     import sqlite3
 
     # Creating db connection
-    cnx = sqlite3.connect('movies_db.sqlite')
+    cnx = sqlite3.connect(db_path)
 
     # Reading data from sqlite database table
     movie_df = pd.read_sql_query("SELECT * FROM omdb_movies", cnx)
