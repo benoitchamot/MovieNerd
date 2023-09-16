@@ -183,8 +183,8 @@ def api_movies():
 		return jsonify({'Error': 'No movie found.'})
 
 # Static Actor Ratings route
-@app.route("/api/v1.0/actors_ratings")
-def api_actors_ratings():
+@app.route("/api/v1.0/actors_ratings/<nan>")
+def api_actors_ratings(nan):
 	# Open session to the database
 	session = Session(bind=engine)
 	all_movies = session.query(movies)
@@ -205,9 +205,40 @@ def api_actors_ratings():
 		movies_dicts.append(mov_dict)
 
 	movies_df = pd.DataFrame(movies_dicts)
+	
+	# Close session
+	session.close()
+
+	all_actors = session.query(actors)
+	
+	# Create empty lists
+	actors_dicts = []
+
+	# Loop through the data points
+	for row in all_actors:    
+    	# Add the data to a dictionary
+		act_dict = {'Id': row.actorid,
+			  'Name': row.name,
+			  'DOB': row.date_of_birth,
+			  'City': row.birth_city,
+			  'Country': row.birth_country,
+			  'Height inches': row.height_inches,
+			  'Gender': row.gender,
+			  'Ethnicity': row.ethnicity,
+			  'Net worth': row.networth
+			  }
+		
+		# Append the data to the list of dictionary
+		actors_dicts.append(act_dict)
+
+	actors_df = pd.DataFrame(actors_dicts)
 
 	# Get a DataFrame of all the actors and their average rating
-	ratings = get_actor_rating(movies_df)
+	ratings = get_actor_rating(movies_df, actors_df)
+
+	if nan == '0':
+		ratings = ratings.dropna(how='any')
+
 	ratings = ratings.to_dict()
 
 	# Close session

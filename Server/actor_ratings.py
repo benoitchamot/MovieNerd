@@ -3,7 +3,7 @@ import pandas as pd
 import warnings
 warnings.simplefilter(action='ignore')
 
-def get_actor_rating(omdb_df):
+def get_actor_rating(omdb_df, actor_df):
 # Get a DataFrame of all the actors and their average rating
 
     # Reduce the number of columns
@@ -32,5 +32,16 @@ def get_actor_rating(omdb_df):
     actor_count_movies  = actor_count_movies.rename(columns={"Actor": "Count of movies"})
     actor_count_movies  = actor_count_movies.rename_axis('Actor')
     actors_movies_ratings = pd.merge(actor_avg_rating, actor_count_movies , on="Actor")
+
+    print(actor_df.columns)
+
+    actors_movies_ratings = pd.merge(actors_movies_ratings, actor_df, left_on=['Actor'], right_on=['Name'])
+    actors_movies_ratings = actors_movies_ratings[['Actor', 'Count of movies', 'Net worth', 'imdbRating']]
+
+    actors_movies_ratings = actors_movies_ratings.rename(columns={'Count of movies': 'count_of_movies', 'Net worth': 'networth'})
+
+    # Drop richest male actor (Alan Howard is an outlier)
+    outlier_name = 'Alan Howard'
+    actors_movies_ratings.drop(actors_movies_ratings[actors_movies_ratings['Actor'] == outlier_name].index, inplace = True)
 
     return actors_movies_ratings
