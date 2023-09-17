@@ -1,82 +1,77 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Movie Nerd. Data Nerd.</title>
+<html lang="en">
 
-         <!-- Bootstrap CSS -->
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-         rel="stylesheet"
-         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-         crossorigin="anonymous">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white">
-            <div class="container">
-                <a href="#" class="navbar-brand">Movie Nerd. Data Nerd.</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="info_movies.html" class="nav-item nav-link">Movies Info</a>
-                        <a href="info_actors.html" class="nav-item nav-link">Actors Info</a>
-                        <a href="page_asha.html" class="nav-item nav-link">Asha</a>
-                        <a href="page_benny.html" class="nav-item nav-link">Benny</a>
-                        <a href="page_sandra.html" class="nav-item nav-link">Sandra</a>
-                        <a href="page_jyotsna.html" class="nav-item nav-link">Jyotsna</a>
-                        <a href="map.html" class="nav-item nav-link active">Map</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Movie Nerd. Data Nerd.</title>
 
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="" />
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="static/css/map.css">
+</head>
+
+<body>  
+    <!-- The div that holds navbar --> 
+    <nav class="navbar navbar-expand-sm navbar-light bg-white">
         <div class="container">
-            <div class="p-5 my-4 bg-light rounded-7">
-                <h1>Page title...</h1>
-                <p class="lead">Page summary.., what questions are you answering?</p>
-            </div>
-
-            <div class="row mt-5">
-                <div class="col-md-4">
-                    <h2>Filters</h2>
-                    <p>These are the example.</p>
-                    <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
-                    <select id="selActor" onchange="genreChangedActor(this.value)"></select>
+            <a href="#" class="navbar-brand">Movie Nerd. Data Nerd.</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="info_movies.html" class="nav-item nav-link">Movies Info</a>
+                    <a href="info_actors.html" class="nav-item nav-link">Actors Info</a>
+                    <a href="page_asha.html" class="nav-item nav-link">Asha</a>
+                    <a href="page_benny.html" class="nav-item nav-link">Benny</a>
+                    <a href="page_sandra.html" class="nav-item nav-link">Sandra</a>
+                    <a href="page_jyotsna.html" class="nav-item nav-link">Jyotsna</a>
+                    <a href="map.html" class="nav-item nav-link active">Map</a>
                 </div>
             </div>
-
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2>Map</h2>
-                    <div id = "chart_1"></div>
-                </div>
-            </div>
-
-            
-            <hr>
-            <footer>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>Created by MONU-DA-P3-G7</p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        Source: <a href="https://github.com/benoitchamot/MONU_project3" class="text-dark">GitHub</a>
-                    </div>
-                </div>
-            </footer>
         </div>
+    </nav>
+    <div class="container">
+      <div class="p-5 my-4 bg-light rounded-7">
+        <h1>Average Actor Networth by Country</h1>
+        <p class="lead">- This page shows a map with average networth of actors by their country of origin.</br>- The locations mostly represent the cities where max actors from the country were born!</br> - The higher the average networth of a country, the bigger the spot!!</br> - You may hover over the map for fun stats!!!</p>
+      </div>
+    </div>
+    <!-- The div that holds our map -->
+    <div id="map"></div>
+  <div class="container">
+    <footer>
+        <div class="row">
+            <div class="col-md-6">
+              <p>Created by MONU-DA-P3-G7</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                Source: <a href="https://github.com/benoitchamot/MONU_project3" class="text-dark">GitHub</a>
+            </div>
+        </div>
+    </footer>
+  </div>  
+    <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  <!-- D3 JavaScript -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Our JavaScript -->
+  <script type="text/javascript" src="static/js/map.js"></script>
+</body>
 
-
-        <!-- SCRIPTS -->
-        <script src="https://d3js.org/d3.v7.min.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="./static/js/map.js"></script>
-
-        <!-- Bootstrap JS Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    </body>
 </html>
