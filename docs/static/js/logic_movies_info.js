@@ -57,14 +57,24 @@ function displayBubbleChart(movies) {
     };
     
     let layout = {
-        xaxis: {title: {text: 'Release Year'}}
-    }
+        xaxis: {title: {text: 'Release Year'}},
+
+        margin: {
+            l: 50,
+            r: 50,
+            b: 50,
+            t: 20,
+            pad: 0
+        },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#ffffff'
+    };
     
     // Data array
-    let data = [trace]
+    let data = [trace];
     
     // Render the plot to the div tag with id "bubble"
-    Plotly.newPlot("bubbleChart", data, layout)
+    Plotly.newPlot("bubbleChart", data, layout);
 }
 
 function updateDashboard(){
