@@ -1,5 +1,5 @@
 // Set up base URL for fetching data
-const baseURL = 'http://127.0.0.1:5000/api/v1.0/actors_ratings/0';
+const baseURL = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/actors_ratings/0';
 
 // Initializing the page with a default look
 function init() {

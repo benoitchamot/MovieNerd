@@ -8,6 +8,7 @@ let selected_genre = "0"
 let selected_actor = "0"
 
 function displayWOrdCloud(keywords) {
+    console.log(keywords)
 
     // Trace for the movie revenue per year
     let trace = {
@@ -18,12 +19,33 @@ function displayWOrdCloud(keywords) {
             color: '#9B2915'
         }
     };
+
+    let layout = {
+        margin: {
+            l: 50,
+            r: 50,
+            b: 100,
+            t: 20,
+            pad: 0
+        },
+    }
     
     // Data array
     let data = [trace]
     
     // Render the plot to the div tag with id "bubble"
-    Plotly.newPlot("wordCloud", data)
+    Plotly.newPlot("wordCloud", data, layout)
+
+    //var words = [
+    //    {"x": "Mandarin chinese", "value": 10},
+
+    console.log(keywords)
+
+    words = []
+    for (let d = 0; d < keywords.word.length; d++) {
+        words.push({"x": keywords.word[d], "value": keywords.count[d]});
+    }
+    wordcloud(words)
 }
 
 function displayBubbleChart(movies) {
