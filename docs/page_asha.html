@@ -11,7 +11,7 @@
          crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <div class="container">
                 <a href="#" class="navbar-brand">Movie Nerd. Data Nerd.</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -26,7 +26,7 @@
                         <a href="page_benny.html" class="nav-item nav-link">Benny</a>
                         <a href="page_sandra.html" class="nav-item nav-link">Sandra</a>
                         <a href="page_jyotsna.html" class="nav-item nav-link">Jyotsna</a>
-                        <a href="map.html" class="nav-item nav-link active">Map</a>
+                        <a href="map.html" class="nav-item nav-link">Map</a>
                     </div>
                 </div>
             </div>
@@ -34,54 +34,56 @@
 
         <div class="container">
             <div class="p-5 my-4 bg-light rounded-7">
-                <h1>Page title...</h1>
-                <p class="lead">Page summary.., what questions are you answering?</p>
+                <h1>Hollywood Data Insights: From Ratings to Wealth</h1>
+                <p class="lead">Discover key trends and insights in the film industry</p>
+
+                    <ul>
+                        <li><strong>Top 10 Actors by Average Rating:</strong> How do your favorite actors rank based on critics' opinions?</li>
+                        <li><strong>Top 10 Actors by Movie Count:</strong> Which actors have taken on the most roles?</li>
+                        <li><strong>Distribution of Ratings:</strong> What's the most common rating, and how do movies typically score?</li>
+                        <li><strong>Distribution of Actors' Net Worth:</strong> Where does the wealth lie in Hollywood?</li>
+                        <li><strong>Net Worth vs. Ratings Scatter Plot:</strong> Do the richest actors play in the best movies?</li>
+                    </ul>
+                    
+                   
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h2>Filters</h2>
-                    <p>These are the example.</p>
-                    <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
-                    <select id="selActor" onchange="genreChangedActor(this.value)"></select>
+                    <h2>Top 10 Actors by</h2>
+                        <select id="barChartDropdown">
+                        <option value="averageRating">Rating</option>
+                        <option value="movieCount">Movies Count</option>
+                      </select>
                 </div>
                 <div class="col-md-4">
-                    <h2>Selection</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Genre</th>
-                                <th>Actor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id = "genre"></td>
-                                <td id = "actor"></td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <h2>Chart 1 title</h2>
-                    <div id = "chart_1"></div>
+                    <div id = "barChart"></div>
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <h2>Chart 2 title</h2>
-                    <div id = "chart_2"></div>
+                    <h2>Distribution by</h2>
+                    <select id="histogramDropdown">
+                        <option value="ratingDistribution">Rating</option>
+                        <option value="netWorthDistribution">Net Worth</option>
+                      </select>
+                    <div id = "histChart"></div>
+                    
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <h2>Chart 3 title</h2>
-                    <div id = "chart_2"></div>
+                    <h2>Scatter plot for Net Worth vs IMDb Rating</h2>
+                    
+                    <button id="generatePlot">Click here to see!</button>
+                    <div id="scatterPlot"></div>
                 </div>
             </div>
 
