@@ -21,16 +21,29 @@ function plotNetworth(actors, div_name) {
         x: actors.Name,
         y: actors.Networth,
         type: 'bar',
+        marker: {
+            color: '#9B2915'
+        },
         text: actors.Name
       };
+      
+    let layout = {
+        margin: {
+            l: 50,
+            r: 50,
+            b: 150,
+            t: 20,
+            pad: 0
+        },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#ffffff'
+    };
 
     // Data array
     let data = [trace]
 
-    console.log(actors)
-
     // Render the plot to the div tag with id "bubble"
-    Plotly.newPlot(div_name, data)
+    Plotly.newPlot(div_name, data, layout)
 }
 
 // Update charts
