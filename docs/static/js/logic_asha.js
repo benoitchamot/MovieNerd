@@ -183,13 +183,25 @@ function init() {
 
     // Use d3 to select the button with id 'generatePlot'
     let button = d3.select("#generatePlot");
+    
+
 
     // Create a function that generates a scatter plot for Net Worth vs IMDb Rating
     function generateScatterPlot(data) {
-    
+
+            
         // Extract net worth and IMDb rating values and convert them to numbers
-        let netWorthArray = Object.values(data.networth).map(Number)
-        let imdbRatingArray = Object.values(data.imdbRating).map(Number)
+        let netWorthArray = Object.values(data.networth).map(Number);
+        let imdbRatingArray = Object.values(data.imdbRating).map(Number);
+
+        // Creating hover text with Actors' names, Net Worth and Ratings
+        let hoverTexts = []
+
+        for (let i = 0; i < netWorthArray.length; i++) {
+            let roundedRating = parseFloat(imdbRatingArray[i]).toFixed(1);
+            console.log(roundedRating);
+            hoverTexts.push(`Actor: ${data.Actor[i]}<br>Net Worth: $${netWorthArray[i]}<br>Rating: ${roundedRating}`);
+        }
 
         // Define scatter plot
         let trace = {
@@ -197,10 +209,14 @@ function init() {
             y: imdbRatingArray,
             mode: 'markers',
             type: 'scatter',
+            hoverinfo: 'text',
+            hovertext: hoverTexts,
             marker: {
                 color: '#FF9AA2'
             }  
         };
+
+        
 
         // Define layout for the scatter plot
         let layout = {
@@ -218,11 +234,10 @@ function init() {
         Plotly.newPlot('scatterPlot', [trace], layout);
     }
 
-// When the button is clicked, fetch data and generate the scatter plot
-button.on("click", function() {
+    // When the button is clicked, fetch data and generate the scatter plot
+    button.on("click", function() {
     fetchData(generateScatterPlot);
-});
-  
-  
-}    
+    });
+
+}   
 init();   
