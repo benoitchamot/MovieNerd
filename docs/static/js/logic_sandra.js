@@ -1,3 +1,10 @@
-// API base URL
-// Run Flask server first: python flash_server.py
-let api_url = 'http://127.0.0.1:5000/api/v1.0/';
+// API URL
+let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/financials';
+
+// Function to handle the data
+function manipulateFinancialsData(data) {
+    console.log(data);
+}
+
+// Retrieve the data
+d3.json(api_url).then(manipulateFinancialsData);
