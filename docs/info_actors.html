@@ -35,7 +35,82 @@
         <div class="container">
             <div class="p-5 my-4 bg-light rounded-7">
                 <h1>Actors Info</h1>
-                <p class="lead">Learn more about your favourite actors. Coming soon.</p>
+                <h2>Hollywood Data Insights: From Ratings to Wealth</h2>
+                <p class="lead">Discover key trends and insights in the film industry</p>
+                    <ul class="lead">
+                        <li><strong>Top 10 Actors by Average Rating:</strong> How do your favorite actors rank based on critics' opinions?</li>
+                        <li><strong>Top 10 Actors by Movie Count:</strong> Which actors have taken on the most roles?</li>
+                        <li><strong>Distribution of Ratings:</strong> What's the most common rating, and how do movies typically score?</li>
+                        <li><strong>Distribution of Actors' Net Worth:</strong> Where does the wealth lie in Hollywood?</li>
+                        <li><strong>Net Worth vs. Ratings Scatter Plot:</strong> Do the richest actors play in the best movies?</li>
+                        <li><strong>Gender Wealth Gap:</strong> How does the wealth of male and female actors compare?</li>
+                    </ul>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h2>Top 10 Actors by</h2>
+                        <select id="barChartDropdown">
+                        <option value="averageRating">Rating</option>
+                        <option value="movieCount">Movies Count</option>
+                      </select>
+                      <div id = "barChart"></div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Distribution by</h2>
+                    <select id="histogramDropdown">
+                        <option value="ratingDistribution">Rating</option>
+                        <option value="netWorthDistribution">Net Worth</option>
+                      </select>
+                    <div id = "histChart"></div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    
+                    
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>Scatter plot for Net Worth vs IMDb Rating</h2>
+                    
+                    <button id="generatePlot">Click here to see!</button>
+                    <div id="scatterPlot"></div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <h2>Gender Wealth Gap</h2>
+                    <p>Select how many results to display</p>
+                    <select id="selGenre" onchange="TopNSelect(this.value)">
+                        <option value=5>Top 5</option>
+                        <option value=10>Top 10</option>
+                        <option value=20>Top 20</option>
+                        <option value=50>Top 50</option>
+                        <option value=100>Top 100</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h3>Richest Male Actors</h3>
+                    <div id = "networth_male"></div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Richest Female Actors</h3>
+                    <div id = "networth_female"></div>
+                </div>
             </div>
 
         <hr>
@@ -55,6 +130,8 @@
         <!-- SCRIPTS -->
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="./static/js/logic_asha.js"></script>
+        <script src="./static/js/logic_benny.js"></script>
 
         <!-- Bootstrap JS Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
