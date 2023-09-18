@@ -34,18 +34,16 @@ function displayWOrdCloud(keywords) {
     let data = [trace]
     
     // Render the plot to the div tag with id "bubble"
-    Plotly.newPlot("wordCloud", data, layout)
+    // Plotly.newPlot("wordCloud", data, layout)
 
-    //var words = [
-    //    {"x": "Mandarin chinese", "value": 10},
-
-    console.log(keywords)
-
+    // Format the keywords object for the wordcloud function
     words = []
     for (let d = 0; d < keywords.word.length; d++) {
         words.push({"x": keywords.word[d], "value": keywords.count[d]});
     }
-    wordcloud(words)
+
+    // Display the wordcloud
+    wordcloud(words, 'wordCloud2')
 }
 
 function displayBubbleChart(movies) {
