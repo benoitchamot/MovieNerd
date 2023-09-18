@@ -3,7 +3,12 @@ body {
   margin: 0;
 }
 
-#map,
+#map {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+}
+
 body,
 html {
   height: 100%;
