@@ -193,6 +193,7 @@ function init() {
         // Extract net worth and IMDb rating values and convert them to numbers
         let netWorthArray = Object.values(data.networth).map(Number);
         let imdbRatingArray = Object.values(data.imdbRating).map(Number);
+        let actorArray = Object.values(data.Actor);
 
         // Creating hover text with Actors' names, Net Worth and Ratings
         let hoverTexts = []
@@ -200,7 +201,7 @@ function init() {
         for (let i = 0; i < netWorthArray.length; i++) {
             let roundedRating = parseFloat(imdbRatingArray[i]).toFixed(1);
             console.log(roundedRating);
-            hoverTexts.push(`Actor: ${data.Actor[i]}<br>Net Worth: $${netWorthArray[i]}<br>Rating: ${roundedRating}`);
+            hoverTexts.push(`Actor: ${actorArray[i]}<br>Net Worth: $${netWorthArray[i]}<br>Rating: ${roundedRating}`);
         }
 
         // Define scatter plot
