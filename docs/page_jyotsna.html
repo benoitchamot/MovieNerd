@@ -30,58 +30,32 @@
 
         <div class="container">
             <div class="p-5 my-4 bg-light rounded-7">
-                <h1>Page title...</h1>
-                <p class="lead">Page summary.., what questions are you answering?</p>
+                <h1>Best Directors by Genre</h1>
+                <p class="lead">This page helps find the top Directors by Genre</p>
+                <p>Select a Genre to see:</p>
+                <ul>
+                    <li>Who are the top directors by the average <strong>rating</strong> of their films in that genre?</li>
+                    <li>Who are the top directors by the average <strong>gross revenue</strong> by their films in that genre?</li>
+                </ul>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h2>Filters</h2>
-                    <p>These are the example.</p>
-                    <select id="selGenre" onchange="genreChangedGenre(this.value)"></select>
-                    <select id="selActor" onchange="genreChangedActor(this.value)"></select>
-                </div>
-                <div class="col-md-4">
-                    <h2>Selection</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Genre</th>
-                                <th>Actor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id = "genre"></td>
-                                <td id = "actor"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3>Genre</h3>
+                    <p>Use the dropdown menu to select</p>
+                    <select id="selGenre"></select>
                 </div>
             </div>
 
             <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2>Chart 1 title</h2>
-                    <div id = "chart_1"></div>
+                <div class="col-md-6">
+                    <div id = "omdbRating"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <div id = "grossRev"></div>
                 </div>
             </div>
-
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2>Chart 2 title</h2>
-                    <div id = "chart_2"></div>
-                </div>
-            </div>
-
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2>Chart 3 title</h2>
-                    <div id = "chart_2"></div>
-                </div>
-            </div>
-
-
             
             <hr>
             <footer>
