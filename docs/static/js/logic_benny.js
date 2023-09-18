@@ -15,6 +15,50 @@ function TopNSelect(value) {
     updateDashboard();
 }
 
+function plotWealthGap(male_data, female_data, div_name) {
+    let trace1 = {
+        x: male_data.Networth,
+        y: [...Array(100).keys()],
+        type: 'bar',
+        orientation: 'h',
+        text: male_data.Name,
+        marker: {
+            color: '#A2D5F2'
+        },
+        name: 'Male Actors'
+    }
+    let trace2 = {
+        x: female_data.Networth,
+        y: [...Array(100).keys()],
+        type: 'bar',
+        orientation: 'h',
+        text: female_data.Name,
+        marker: {
+            color: '#CEA2FD'
+        },
+        name: 'Female Actors'
+    }
+
+    let layout = {
+        margin: {
+            l: 50,
+            r: 50,
+            b: 150,
+            t: 20,
+            pad: 0
+        },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#ffffff'
+    };
+
+    // Data array
+    let data = [trace1, trace2];
+
+    // Render the plot to the div
+    Plotly.newPlot(div_name, data, layout)
+
+}
+
 function plotNetworth(actors, div_name) {
     // Trace for the OTU data
     let trace = {
@@ -42,7 +86,7 @@ function plotNetworth(actors, div_name) {
     // Data array
     let data = [trace]
 
-    // Render the plot to the div tag with id "bubble"
+    // Render the plot to the div
     Plotly.newPlot(div_name, data, layout)
 }
 
@@ -55,8 +99,7 @@ function updateDashboard(){
     top_male_actor['Networth'] = all_male_actor['Networth'].slice(0,top_N);
 
     // Plot data
-    plotNetworth(top_female_actor, "networth_female");
-    plotNetworth(top_male_actor, "networth_male");
+    plotWealthGap(top_male_actor, top_female_actor, "wealth_gap")
 }
 
 function payGapAnalysis(actors) {
