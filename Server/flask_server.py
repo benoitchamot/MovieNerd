@@ -90,6 +90,7 @@ except Exception as inst:
 movies = Base.classes.omdb_movies
 actors = Base.classes.actor
 characters = Base.classes.character
+financials = Base.classes.financials
 
 #########################################################
 # Flask Setup
@@ -154,6 +155,34 @@ def home():
 		f"	<li>Example is given for genre = Action</li>"
 		f"</ul>"
 	)
+
+# Static Financials route
+@app.route("/api/v1.0/financials")
+def api_financials():
+	# Open session to the database
+	session = Session(bind=engine)
+	all_financials = session.query(financials)
+	
+	# Create empty lists
+	fin_dicts = []
+
+	# Loop through the measurements
+	for row in all_financials:    
+    	# Add the data to a dictionary
+		mov_dict = {'Title': row.Title,
+			  		'Budget': row.budget,
+					'Gross': row.gross,
+					'ROI': row.ROI,
+					'Rating': row.rating}
+
+		# Append the data to the list of dictionary
+		fin_dicts.append(mov_dict)
+
+	# Close session
+	session.close()
+
+	# Return jsonified dictionary
+	return jsonify(fin_dicts)
 
 # Static Movies route
 @app.route("/api/v1.0/movies")
