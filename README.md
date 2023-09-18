@@ -1,7 +1,7 @@
 # MONU_project3
 Repository for Monash University Bootcamp Project 3 (Group 7)
 
-## File structure
+## File structure and operational logic
 ### Directories
 - `Datasets` contains all the CSV files extracted or created as part of the ETL process
 - `docs` contains the HTML, JavaScript and CSS used to create the Dashboard
@@ -25,7 +25,23 @@ Repository for Monash University Bootcamp Project 3 (Group 7)
 - `map.html` contains geolocation visualisation
 
 ### `Server` directory
-- 
+The server side is composed of two parts:
+- The ETL files used to extract the data from the data sources and populate the database
+- The Flask code used to get data from the database and expose the API used by the dashboard
+
+The Flask code uses the files shown in the diagram below:
+
+<img src="img/Flask_structure.jpg" alt="ETL_to_API" width="400"/>
+
+- `flask_server.py` is the main code. To run flask locally, use the command `python flask_server.py` from within `/Server`
+- The other python files are local modules used for different functions used in `flask_server.py`
+- `movies_db.sqlite` is the database containing all the data used in the dashboard and exposed by the API
+
+The ERD for the database is shown below:
+
+<img src="img/ERD.png" alt="ETL_to_API" width="600"/>
+
+The tables are more extensive but only the main columns used in the dashboard are shown here for simplicity. Due to the short timeline of this project, only little time has been given to the data engineering steps and the tables are not as normalised or optimised as they could be. This has been noted as an area of focus for future work.
 
 ## Dataflow
 ### Overview
@@ -113,3 +129,4 @@ We also looked at the Gender Wealth Gap (difference between the )
 - The same goes for the movies budget and gross revenue and these data should be validated with alternate sources
 
 ## Future work
+- Better normalisation and structure for the tables in the database, make better use of foreign keys instead of repeating data
