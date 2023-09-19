@@ -37,11 +37,17 @@
         <div id="body-container" class="container">
             <div class="p-5 my-0 bg-light rounded-7">
                 <h1>Movies Info</h1>
-                <p class="lead">Select one genre and one actor to display a subset of the movies and learn more about them.</p>
                 <p class="lead">Select a Genre to see:</p>
                 <ul class="lead">
+                    <li>A tag cloud of the most common words from the <strong>movies plots</strong></li>
                     <li>Who are the top directors by the average <strong>rating</strong> of their films in that genre?</li>
                     <li>Who are the top directors by the average <strong>gross revenue</strong> by their films in that genre?</li>
+                </ul>
+                <p class="lead">You can also see financial information for all movies (not filtered by Genre)</p>
+                <ul class="lead">
+                    <li><strong>How much Budget Is Involved in Rating</strong> </li>
+                    <li><strong>How much Gross Depends of Budget</strong></li>
+                    <li><strong>Is Rating A real measure to determine ROI</strong></li>
                 </ul>
             </div>
 
@@ -59,6 +65,10 @@
             </div>
 
             <div class="row mt-5">
+                <div class="col-md-6"> <h2>Directors</h2></div>
+            </div>
+
+            <div class="row mt-5">
                 <div class="col-md-6">
                     <div id = "omdbRating"></div>
                 </div>
@@ -68,14 +78,30 @@
                 </div>
             </div>
 
-            <!-- <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2>Movies Gross Revenue</h2>
-                    <div id = "bubbleChart"></div>
+            <div class="row mt-5">
+                <div class="col-md-6"> <h2>Financials information (all movies)</h2></div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div id = "RatingBudgetDiv"></div>
                 </div>
-            </div> -->
+                <div class="col-md-6">
+                    <div id = "RatingGrossDiv"></div>
+                </div>
+            </div>
 
-        
+            <div class="row mt-5">
+                
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>Rating vs. ROI</h2>
+                    <div id = "RatingROIDiv"></div>
+                </div>
+            </div>
+
         <hr>
             <footer>
                 <div class="row">
@@ -90,14 +116,6 @@
         </div>
     </div>
 
-    <!-- REMOVE BEFORE FINAL PUSH -->
-    <hr>
-    <h3>Dev pages</h3>
-    <ul>
-    <li><a href="page_sandra.html">Sandra</a></li>
-    </ul>
-
-
         <!-- SCRIPTS -->
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -105,6 +123,7 @@
         <script src="./static/js/wordcloud.js"></script>
         <script src="./static/js/logic_movies_info.js"></script>
         <script src="./static/js/logic_jyotsna.js"></script>
+        <script src="static/js/logic_financials.js"></script>
         
 
         <!-- Bootstrap JS Bundle with Popper -->

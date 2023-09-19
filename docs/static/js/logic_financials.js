@@ -107,21 +107,33 @@ function init() {
             let record = data[i];
             let title=record["Title"]
             let roi = record["ROI"];
+            let gross = record["Gross"];
+            let budget = record["Budget"];
             let rating = record["Rating"];
-            ROIDataColl.push({roi: roi, rating: rating, title: title});
+            ROIDataColl.push({roi: roi, rating: rating, title: title, gross:gross, budget:budget});
         }
         
-    
+        // Creating hover text with Actors' names, Net Worth and Ratings
+        let hoverTexts = []
+
+        for (let i = 0; i < ROIDataColl.length; i++) {
+            //let roundedRating = parseFloat(imdbRatingArray[i]).toFixed(1);
+            hoverTexts.push(`Title: ${ROIDataColl[i].title}<br>
+            Budget: $${ROIDataColl[i].budget}<br>
+                            Rating: ${ROIDataColl[i].rating}`);
+        }
+
         // Prepare data for plotting
         let trace = {
             x: ROIDataColl.map(object => object.roi),
             y: ROIDataColl.map(object => object.rating),
             name: "Budget Data",
-            text: ROIDataColl.map(object => object.title),
+            hoverinfo: 'text',
+            hovertext: hoverTexts,
             mode:'markers',
             type: "Scatter",
             marker: {
-                color: 'CF2912'
+                color: 'cc3399'
             }};
 
         // Create the layout 
