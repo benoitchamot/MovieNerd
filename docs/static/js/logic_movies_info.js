@@ -4,7 +4,7 @@ let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
 
 // Global variables
 let MOVIES = [];
-let selected_genre = "0"
+let selected_genre = "Action"
 let selected_actor = "0"
 
 function displayWOrdCloud(keywords) {
@@ -106,9 +106,9 @@ function updateDashboard(){
     // Print the URL for debug purposes
     console.log(base_url);
     
-    d3.json(base_url).then(function(data){
-        displayBubbleChart(data);
-    })
+    // d3.json(base_url).then(function(data){
+    //     displayBubbleChart(data);
+    // })
 
     // Get the Top 50 keywords for the selected genre
     let keyword_url = api_url + 'keywords/g/'
@@ -125,6 +125,12 @@ function updateDashboard(){
     d3.json(keyword_url).then(function(data){
         displayWOrdCloud(data);
     })
+
+    // Update the director charts
+    // directors_url = api_url + 'director_ratings'
+    // d3.json(directors_url).then(function(data){
+    //     updatePlot();
+    // })
 }
 
 function genreChangedGenre(value){
@@ -187,8 +193,6 @@ function populateDropdown(data) {
     
     // Initialise dashboard
     updateDashboard();
-
-    
 }
 
 // Get all movies from the API

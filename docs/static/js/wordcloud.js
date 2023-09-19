@@ -38,7 +38,7 @@ function wordcloud(words, div_id) {
     chart.angles([0, -30, 30])
     // enable a color range
     let customColorScale = anychart.scales.linearColor();
-    customColorScale.colors(["#ff0000", "#0000ff"]);
+    customColorScale.colors(["#89DBF5", "#cc3399"]);
     chart.colorScale(customColorScale);
     chart.colorRange(false);
     chart.tooltip(false);

@@ -1,12 +1,11 @@
 // API base URL
 // Run Flask server first: python flash_server.py
-// let api_url = 'http://127.0.0.1:5000/api/v1.0/director_ratings';
-let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/director_ratings';
+//let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
 
 // Using the D3 library to read in the URL 
 //-----------------------------------------------------------
 
-d3.json(api_url).then(function(datain) {
+d3.json(api_url + 'director_ratings').then(function(datain) {
 
     // Extracting genre
     genre = datain.Genre;
@@ -29,8 +28,6 @@ d3.json(api_url).then(function(datain) {
         return arr.filter((item,index) => arr.indexOf(item) === index);
     }
     // Preparing dropdown by appending Genre
-    // Add an option to select genre
-    d3.select("#selGenre").append("option").attr("value", '0').text('Select...');
 
     for (let d = 0; d < list_genre.length; d++) {
         d3.select("#selGenre").append("option").attr("value",list_genre[d]).text(list_genre[d]);
