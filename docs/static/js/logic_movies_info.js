@@ -5,7 +5,6 @@ let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
 // Global variables
 let MOVIES = [];
 let selected_genre = "Action"
-let selected_actor = "0"
 
 function displayWOrdCloud(keywords) {
     console.log(keywords)
@@ -33,9 +32,6 @@ function displayWOrdCloud(keywords) {
     // Data array
     let data = [trace]
     
-    // Render the plot to the div tag with id "bubble"
-    // Plotly.newPlot("wordCloud", data, layout)
-
     // Format the keywords object for the wordcloud function
     words = []
     for (let d = 0; d < keywords.word.length; d++) {
@@ -46,69 +42,10 @@ function displayWOrdCloud(keywords) {
     wordcloud(words, 'wordCloud2')
 }
 
-function displayBubbleChart(movies) {
-    // Display bubble chart
-
-    // Get data in arrays
-    let titles = []
-    let release = []
-    let revenue = []
-
-    for (let i = 0; i<movies.length; i++){
-        titles.push(movies[i]['Title'])
-        release.push(com_convertStringToYear(movies[i]['Release Date']));
-        revenue.push(movies[i]['Revenue']);
-    }
-
-    function scaleSize(value) {
-        return Math.sqrt(value)/1000;
-    }
-    
-    // Trace for the movie revenue per year
-    let trace = {
-        x: release,
-        y: revenue,
-        mode: 'markers',
-        marker: {
-            size: revenue.map(index => scaleSize(index)),
-            color: '#9B2915'
-        },
-        text: titles
-    };
-    
-    let layout = {
-        xaxis: {title: {text: 'Release Year'}},
-
-        margin: {
-            l: 50,
-            r: 50,
-            b: 50,
-            t: 20,
-            pad: 0
-        },
-        paper_bgcolor: '#ffffff',
-        plot_bgcolor: '#ffffff'
-    };
-    
-    // Data array
-    let data = [trace];
-    
-    // Render the plot to the div tag with id "bubble"
-    Plotly.newPlot("bubbleChart", data, layout);
-}
-
 function updateDashboard(){
 // Update the dashboard based on the selected filters
     let base_url = api_url + 'movies'
-    if (selected_actor != '0'){base_url += '/a/' + selected_actor;}
     if (selected_genre != '0'){base_url += '/g/' + selected_genre;}
-
-    // Print the URL for debug purposes
-    console.log(base_url);
-    
-    // d3.json(base_url).then(function(data){
-    //     displayBubbleChart(data);
-    // })
 
     // Get the Top 50 keywords for the selected genre
     let keyword_url = api_url + 'keywords/g/'

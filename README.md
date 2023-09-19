@@ -65,9 +65,10 @@ The API exposes various static and dynanmic routes that are detailed on the API 
 
 ## Data engineering
 ### Data sources
-We gathered data from two different sources:
+We gathered data from three different open and free sources:
 - Movies and Actors database, by James Gaskin on data.world: https://data.world/jamesgaskin/movies
 - OMDB API: http://www.omdbapi.com/?
+- GeoAPIfy
 
 The James Gaskin's dataset includes information about 636 movies as well as their characters and the actors who play them. 
 

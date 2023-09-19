@@ -5,8 +5,8 @@ const baseURL = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/financials';
 function init() {
 
     // Fetch financial data 
-    fetchData(BudgetData);
-    fetchData(GrossData);
+    //fetchData(BudgetData);
+    //fetchData(GrossData);
     fetchData(ROIData);
     
     // Fetch data and process it for the rating distribution chart
@@ -118,9 +118,7 @@ function init() {
 
         for (let i = 0; i < ROIDataColl.length; i++) {
             //let roundedRating = parseFloat(imdbRatingArray[i]).toFixed(1);
-            hoverTexts.push(`Title: ${ROIDataColl[i].title}<br>
-            Budget: $${ROIDataColl[i].budget}<br>
-                            Rating: ${ROIDataColl[i].rating}`);
+            hoverTexts.push(`Title: ${ROIDataColl[i].title}<br>Budget: $${ROIDataColl[i].budget}<br>Revenue: $${ROIDataColl[i].gross}<br>Rating: ${ROIDataColl[i].rating}`);
         }
 
         // Prepare data for plotting
