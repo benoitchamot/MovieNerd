@@ -68,37 +68,6 @@ function plotWealthGap(male_data, female_data, div_name) {
 
 }
 
-function plotNetworth(actors, div_name) {
-    // Trace for the OTU data
-    let trace = {
-        x: actors.Name,
-        y: actors.Networth,
-        type: 'bar',
-        marker: {
-            color: '#9B2915'
-        },
-        text: actors.Name
-      };
-      
-    let layout = {
-        margin: {
-            l: 50,
-            r: 50,
-            b: 150,
-            t: 20,
-            pad: 0
-        },
-        paper_bgcolor: '#ffffff',
-        plot_bgcolor: '#ffffff'
-    };
-
-    // Data array
-    let data = [trace]
-
-    // Render the plot to the div
-    Plotly.newPlot(div_name, data, layout)
-}
-
 // Update charts
 function updateDashboard(){
     // Slice data to get Top N actors
