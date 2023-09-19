@@ -16,9 +16,18 @@ function TopNSelect(value) {
 }
 
 function plotWealthGap(male_data, female_data, div_name) {
+
+    // Create an array saying Top 1, Top 2, ...
+    tops = []
+    for (t = 1; t<=male_data.Name.length; t++) {
+        tops.push("Top " + t);
+    }
+    tops = tops.reverse()
+    console.log(tops)
+
     let trace1 = {
         x: male_data.Networth,
-        y: [...Array(100).keys()],
+        y: tops,
         type: 'bar',
         orientation: 'h',
         text: male_data.Name,
@@ -29,7 +38,7 @@ function plotWealthGap(male_data, female_data, div_name) {
     }
     let trace2 = {
         x: female_data.Networth,
-        y: [...Array(100).keys()],
+        y: tops,
         type: 'bar',
         orientation: 'h',
         text: female_data.Name,
@@ -93,10 +102,11 @@ function plotNetworth(actors, div_name) {
 // Update charts
 function updateDashboard(){
     // Slice data to get Top N actors
-    top_female_actor['Name'] = all_female_actor['Name'].slice(0,top_N);
-    top_female_actor['Networth'] = all_female_actor['Networth'].slice(0,top_N);
-    top_male_actor['Name'] = all_male_actor['Name'].slice(0,top_N);
-    top_male_actor['Networth'] = all_male_actor['Networth'].slice(0,top_N);
+    // Reverse to get the horizontal bar char right
+    top_female_actor['Name'] = all_female_actor['Name'].slice(0,top_N).reverse();
+    top_female_actor['Networth'] = all_female_actor['Networth'].slice(0,top_N).reverse();
+    top_male_actor['Name'] = all_male_actor['Name'].slice(0,top_N).reverse();
+    top_male_actor['Networth'] = all_male_actor['Networth'].slice(0,top_N).reverse();
 
     // Plot data
     plotWealthGap(top_male_actor, top_female_actor, "wealth_gap")
