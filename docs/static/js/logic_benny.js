@@ -61,7 +61,7 @@ function plotWealthGap(male_data, female_data, div_name) {
     };
 
     // Data array
-    let data = [trace1, trace2];
+    let data = [trace2, trace1];
 
     // Render the plot to the div
     Plotly.newPlot(div_name, data, layout)
