@@ -1,37 +1,10 @@
 // API base URL
 let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
-//let api_url = 'http://127.0.0.1:5000/api/v1.0/'
 
 // Global variables
-let MOVIES = [];
-let selected_genre = "Action"
+let selected_genre
 
-function displayWOrdCloud(keywords) {
-    console.log(keywords)
-
-    // Trace for the movie revenue per year
-    let trace = {
-        x: keywords.word.slice(0,40),
-        y: keywords.count.slice(0,40),
-        type: 'bar',
-        marker: {
-            color: '#9B2915'
-        }
-    };
-
-    let layout = {
-        margin: {
-            l: 50,
-            r: 50,
-            b: 100,
-            t: 20,
-            pad: 0
-        },
-    }
-    
-    // Data array
-    let data = [trace]
-    
+function displayWordCloud(keywords) {
     // Format the keywords object for the wordcloud function
     words = []
     for (let d = 0; d < keywords.word.length; d++) {
@@ -45,29 +18,19 @@ function displayWOrdCloud(keywords) {
 function updateDashboard(){
 // Update the dashboard based on the selected filters
     let base_url = api_url + 'movies'
-    if (selected_genre != '0'){base_url += '/g/' + selected_genre;}
+    if (selected_genre){base_url += '/g/' + selected_genre;}
 
     // Get the Top 50 keywords for the selected genre
     let keyword_url = api_url + 'keywords/g/'
-    if (selected_genre == '0') {
-        keyword_url += 'all';
-    }
-    else {
+    if (selected_genre) {
         keyword_url += selected_genre;
     }
+    else {
+        keyword_url += 'all';
+    }
 
-    // Print the URL for debug purposes
-    console.log(keyword_url);
-
-    d3.json(keyword_url).then(function(data){
-        displayWOrdCloud(data);
-    })
-
-    // Update the director charts
-    // directors_url = api_url + 'director_ratings'
-    // d3.json(directors_url).then(function(data){
-    //     updatePlot();
-    // })
+    // Get the keywords for the selected genre and run the displayWordCloud function
+    d3.json(keyword_url).then(displayWordCloud);
 }
 
 function genreChangedGenre(value){
@@ -75,14 +38,8 @@ function genreChangedGenre(value){
         selected_genre = value;
         d3.select("#genre").text(value);
         updateDashboard();
-    }
-    
-    function genreChangedActor(value){
-    // Callback function for actor dropdown menu
-        selected_actor = value;
-        d3.select("#actor").text(value);
-        updateDashboard();
-    }
+        updatePlot(value);
+}
 
 function removeDuplicates(arr) {
 // Remove duplicates from an array
@@ -92,46 +49,38 @@ function removeDuplicates(arr) {
 
 function populateDropdown(data) {
     let list_genre = []
-    let list_actor = []
 
     // Select dropdown menus from HTML
     let dropDownMenuGenre = d3.select("#selGenre");
-    let dropDownMenuActor = d3.select("#selActor");
-
-    // Add an option to select any genre and any actor
-    dropDownMenuGenre.append("option").attr("value", '0').text('-- Any genre');
-    dropDownMenuActor.append("option").attr("value", '0').text('-- Any actor');
 
     // Loop through the data
     for (let i=0; i<data.length; i++){
 
         // Split the genre
         list_genre += data[i].Genre.split(", ");
-        list_actor += data[i].Actor.split(", ");
 
         // Add a comma separator unless it is the last item in the list
         if (i!=data.length-1) {list_genre += ','};
-        if (i!=data.length-1) {list_actor += ','};
     }
 
     // Remove duplicates from the list and sort alphabetically
     list_genre = removeDuplicates(list_genre.split(",")).sort();
-    list_actor = removeDuplicates(list_actor.split(",")).sort();
 
     // Add the genres to the dropdown menu
     for (let g = 0; g<list_genre.length; g++) {
         dropDownMenuGenre.append("option").attr("value", list_genre[g]).text(list_genre[g]);
     }
 
-    // Add the actors to the dropdown menu
-    for (let a = 0; a<list_actor.length; a++) {
-        dropDownMenuActor.append("option").attr("value", list_actor[a]).text(list_actor[a]);
-    }
+    selected_genre = list_genre[0]
     
     // Initialise dashboard
     updateDashboard();
+    updatePlot(selected_genre);
 }
 
 // Get all movies from the API
 let all_movies_url = api_url + 'movies'
 d3.json(all_movies_url).then(populateDropdown)
+
+// Get all directors from the API
+d3.json(api_url + 'director_ratings').then(callbackDirector);
