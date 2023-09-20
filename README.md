@@ -173,9 +173,11 @@ These visualizations were created using Python libraries such as Matplotlib . Th
 - GeoJson this type of visualization can provide insights into the global distribution of actors, and help identify any geographical patterns or trends. It can also be useful for making comparisons between regions and understanding the impact of location on the film industry.
 
 ## Conclusion
-Through this project, we successfully gathered and integrated data from different sources, performed data cleaning and transformation tasks, conducted data analysis, and created visualizations to gain insights about the movies and actors dataset. The project highlights the importance of data engineering in organizing and analyzing large datasets to extract valuable information. The findings from this project can be used to make informed decisions in the film industry, such as casting choices, budget allocation, and identifying successful directors and actors.
+Through this project, we successfully gathered and integrated data from different sources, performed data cleaning and transformation tasks, conducted data analysis, and created visualizations to gain insights about the movies and actors dataset. The project highlights the importance of data engineering in organizing and analyzing large datasets to extract valuable information.
 
-We also looked at the Gender Wealth Gap (difference between the )
+The findings from this project can be used to make informed decisions in the film industry, such as casting choices, budget allocation, and identifying successful directors and actors.
+
+We also looked at the Gender Wealth Gap (difference between the net worth of male and female actors)
 - The wealth of the Top 100 richest male actors is compared to the wealth of the Top 100 richest female actors
 - We find that the richest female actor (Reese Witherspoon) has a net worth of 50% of the richest male actor (Tom Cruise): 300M USD compared to 600M USD
 - Reese Witherspoon is less rich than the Top 15 men
