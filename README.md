@@ -115,7 +115,7 @@ The dataflow is shown in the diagram below:
 ### Flask and API
 The API [home page](https://spiderdwarf.pythonanywhere.com/) is shown below (the API may look different depending on the current version):
 
-<img src="img/API_home.png" alt="API_home" width="600"/>
+<img src="img/API_home.png" alt="API_home" width="400"/>
 
 The API exposes various static and dynanmic routes that are detailed on the API home page.
 
