@@ -1,6 +1,44 @@
 # MONU_project3
 Repository for Monash University Bootcamp Project 3 (Group 7)
 
+## Prerequesites
+### API keys
+- Create a module named `config.py` in `/ETL` with a variable called `omdb_api_key` containing your OMDB API key
+- Add a variable called `geoapify_key` and containing your GeoAPIfy key in `config.py`
+
+## How to run this project from scratch
+The project contained in this repository is ready to run once the prerequesites are met.
+
+However, if you would like to start with a blank sheet, the following steps can be followed 
+
+### Preparation
+- Delete `movies_db.sqlite` in `/Server`
+- Delete all CSV files in `/Datasets` except `actor.csv`, `character.csv` and `movies.csv`
+
+### Steps (from `/ETL` directory)
+1. Run `ETL_omdb_to_csv.ipynb`, make sure that `omdb.csv` is created in `/Dataset`
+2. Run `ETL_movies_to_db.ipynb`, make sure that `movies_db.sqlite` is created in `/Server`
+3. Run `ETL_financials_to_db.ipynb`
+4. Run `ETL_country_city_to_csv.ipynb`, make sure that `country_coordinates.csv` is created in `/Dataset`
+5. Run `ETL_geodata_to_db.ipynb`
+6. Run `ETL_check.ipynb` and make sure that all tests are passed
+
+## How to run the dashboard
+### Start Flask Server (optional)
+1. Navigate to `/Server`
+2. Start Flask by using the command `python flask_app.py`
+3. Check your console to make sure Flask is running
+4. Navigate to the address indicated in the console
+
+See below for the expected output when running the Flask Server.
+
+<img src="img/run_Flask.png" alt="Flask Server console" width="600"/>
+
+### Launch the dashboard
+To start the dashboard, simply open `index.html` in `/docs` in any browser.
+
+
+
 ## File structure and operational logic
 ### Directories
 - `Datasets` contains all the CSV files extracted or created as part of the ETL process
