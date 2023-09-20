@@ -115,7 +115,6 @@ function updatePlot(inputValue) {
     };
 
 function callbackDirector(datain) {
-
     // Save data to global variable
     directors = datain
 

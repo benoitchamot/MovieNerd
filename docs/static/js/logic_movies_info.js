@@ -78,9 +78,10 @@ function populateDropdown(data) {
     updatePlot(selected_genre);
 }
 
+// Get all directors from the API
+d3.json(api_url + 'director_ratings').then(callbackDirector);
+
 // Get all movies from the API
 let all_movies_url = api_url + 'movies'
 d3.json(all_movies_url).then(populateDropdown)
 
-// Get all directors from the API
-d3.json(api_url + 'director_ratings').then(callbackDirector);
