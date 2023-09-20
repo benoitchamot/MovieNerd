@@ -6,9 +6,6 @@ function init() {
 
     // Fetch financial data 
     fetchData(ROIData);
-    
-    // Fetch data and process it for the rating distribution chart
-   // fetchData(processRatingDistribution);
 
     // Fetch the JSON data by using D3 library
     function fetchData(callback) {
@@ -82,31 +79,7 @@ function init() {
             fetchData(processTopActorsByRating);
         }
     });
-
-    // // Update chart based on dropdown selection
-    // d3.select("#histogramDropdown").on("change", function() {
-
-    //     // Get selected option from the dropdown
-    //     let selectedOption = d3.select(this).property("value");
-    
-    //      // Update the bar chart based on the selected option
-    //     if (selectedOption === "ratingDistribution") {
-    //         fetchData(processRatingDistribution);
-    //     } 
-    //     else if (selectedOption === "netWorthDistribution") {
-    //         fetchData(processNetWorthDistribution); 
-    //     }
-    // });
-
-    // // Use d3 to select the button with id 'generatePlot'
-    // let button = d3.select("#generatePlot");
-    
-    // // When the button is clicked, fetch data and generate the scatter plot
-  
-    // button.on("click", function() {
-    //     fetchData(BudgetData);
-    // });
-
-
 }   
+
+// Run init function
 init();   
