@@ -1,5 +1,5 @@
 // Set up base URL for fetching data
-const baseURL = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/financials';
+const baseURL = api_base_url + 'financials';
 
 // Initializing the page with a default look
 function init() {

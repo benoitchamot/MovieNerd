@@ -1,7 +1,5 @@
 // API base URL
-// Run Flask server first: python flash_server.py
-let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
-//let api_url = 'http://127.0.0.1:5000/api/v1.0/'
+let api_url = api_base_url;
 
 // Global variable
 let top_N = 5;
@@ -23,7 +21,6 @@ function plotWealthGap(male_data, female_data, div_name) {
         tops.push("Top " + t);
     }
     tops = tops.reverse()
-    console.log(tops)
 
     let trace1 = {
         x: male_data.Networth,

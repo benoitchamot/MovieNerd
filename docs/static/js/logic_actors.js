@@ -1,5 +1,5 @@
 // Set up base URL for fetching data
-const baseURL = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/actors_ratings/0';
+const baseURL = api_base_url + 'actors_ratings/0';
 
 // Initializing the page with a default look
 function init() {
@@ -200,7 +200,6 @@ function init() {
 
         for (let i = 0; i < netWorthArray.length; i++) {
             let roundedRating = parseFloat(imdbRatingArray[i]).toFixed(1);
-            console.log(roundedRating);
             hoverTexts.push(`Actor: ${actorArray[i]}<br>Net Worth: $${netWorthArray[i]}<br>Rating: ${roundedRating}`);
         }
 

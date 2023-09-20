@@ -1,25 +1,6 @@
 // Source: https://www.anychart.com/blog/2019/04/30/create-javascript-word-cloud-chart-tutorial/
 // Customisation: https://docs.anychart.com/Basic_Charts/Tag_Cloud
-// Optiona: https://api.anychart.com/anychart.charts.TagCloud#category-size-and-position
-
-
-// var words = [
-//     {"x": "Mandarin chinese", "value": 10, category: "Sino-Tibetan"},
-//     {"x": "English", "value": 9, category: "Indo-European"},
-//     {"x": "Hindustani", "value": 5, category: "Indo-European"},
-//     //{"x": "Spanish", "value": 5, category: "Indo-European"},
-//     //{"x": "Arabic", "value": 4, category: "Afro-Asiatic"},
-//     //{"x": "Malay", "value": 3, category: "Austronesian"},
-//     //{"x": "Russian", "value": 2, category: "Indo-European"},
-//     //{"x": "Bengali", "value": 2, category: "Indo-European"},
-//     //{"x": "Portuguese", "value": 2, category: "Indo-European"},
-//     //{"x": "French", "value": 2, category: "Indo-European"},
-//     {"x": "Hausa", "value": 1, category: "Afro-Asiatic"},
-//     {"x": "Punjabi", "value": 1, category: "Indo-European"},
-//     {"x": "Japanese", "value": 1, category: "Japonic"},
-//     {"x": "German", "value": 1, category: "Indo-European"},
-//     {"x": "Persian", "value": 1, category: "Indo-European"}
-//   ];
+// Options: https://api.anychart.com/anychart.charts.TagCloud#category-size-and-position
 
 function deleteWordCloud(div_id) {
     // Delete everything currently present in the div_id section

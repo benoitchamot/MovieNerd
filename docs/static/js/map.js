@@ -1,7 +1,7 @@
 // API base URL
-// Run Flask server first: python flash_server.py
-//let api_url = 'http://127.0.0.1:5000/api/v1.0/country_actor_networth_geojson';
-let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/country_actor_networth_geojson';
+let api_url = api_base_url + 'country_actor_networth_geojson';
+
+
 
 // Performing a GET request to the query URL/
 d3.json(api_url).then(function (data) {
@@ -88,10 +88,6 @@ function markerColour(Country){
     let topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     });
-  
-    // Creating layer groups:for networth markers.
-    let average_networth = L.layerGroup(networth);
-    console.log(networth);
 
     // Creating a baseMaps object.
     let baseMaps = {

@@ -24,6 +24,16 @@ However, if you would like to start with a blank sheet, the following steps can 
 6. Run `ETL_check.ipynb` and make sure that all tests are passed
 
 ## How to run the dashboard
+### Launch the dashboard
+To start the dashboard, simply open `index.html` in `/docs` in any browser. By default, the dashboard uses a version of the API (same code and same functions) that is hosted on [PythonAnywhere](https://www.pythonanywhere.com/) so the Flask Server is not needed. To use the web-hosted API, make sure that the first lines of code in `common.js` in `/docs/static/js` are commented out as shown below:
+
+```JavaScript
+//const api_base_url = 'http://127.0.0.1:5000/api/v1.0/'; // Use this for locally-run API (Flask Server must be running)
+const api_base_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/'; // Use this for web-hosted API
+```
+
+To use the local Flask Server instead, please follow the instructions in the next subsection.
+
 ### Start Flask Server (optional)
 1. Navigate to `/Server`
 2. Start Flask by using the command `python flask_app.py`
@@ -34,8 +44,14 @@ See below for the expected output when running the Flask Server.
 
 <img src="img/run_Flask.png" alt="Flask Server console" width="600"/>
 
-### Launch the dashboard
-To start the dashboard, simply open `index.html` in `/docs` in any browser.
+If the local Flask Server is used, make sure to change the first lines of code in `common.js` in `/docs/static/js` in the following way:
+
+```JavaScript
+const api_base_url = 'http://127.0.0.1:5000/api/v1.0/'; // Use this for locally-run API (Flask Server must be running)
+//const api_base_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/'; // Use this for web-hosted API
+```
+
+
 
 
 

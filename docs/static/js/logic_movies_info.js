@@ -1,5 +1,5 @@
 // API base URL
-let api_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/';
+let api_url = api_base_url;
 
 // Global variables
 let selected_genre
