@@ -1,10 +1,20 @@
 # Movie Nerd. Data Nerd.
-Repository for Monash University Bootcamp Project 3 (Group 7)
+An interactive dashboard built on JavaScript and Python (Flask) to show information about movies ratings and gender inequalities in the film industry.
+
+Submitted for Monash University Bootcamp Project 3 (Group 7).
 
 ## Prerequesites
 ### API keys
 - Create a module named `config.py` in `/ETL` with a variable called `omdb_api_key` containing your OMDB API key
 - Add a variable called `geoapify_key` and containing your GeoAPIfy key in `config.py`
+
+## Approach
+- Get the data in CSV files for every collaborator to access
+- Perform Data Exploration on all dataset to understand the data and extract initial information
+- Extract, Transform and Load (ETL) data into a SQLite database
+- Analyse data in Python (Jupyter notebooks used for Data Exploration) and in JavaScript
+- Create and run a Flask Server to make the data in the database available through an API
+- Create a dashboard (HTML, JavaScript and CSS) to visualise the data begind the analysis
 
 ## How to run this project from scratch
 The project contained in this repository is ready to run once the prerequesites are met.
@@ -51,7 +61,7 @@ const api_base_url = 'http://127.0.0.1:5000/api/v1.0/'; // Use this for locally-
 //const api_base_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/'; // Use this for web-hosted API
 ```
 
-## File structure and operational logic
+## File structure
 ### Directories
 - `DataExploration` contains files used early in the project to explore the data and functions to be used later
 - `Datasets` contains all the CSV files extracted or created as part of the ETL process
@@ -82,6 +92,8 @@ These files are as self-explanatory as possible but they are secondary to the fi
 - `info_actors.html` contains the actors visualisations
 - `info_movies.html` contains the actors visualisations
 - `map.html` contains geolocation visualisation
+
+More information about the dashboard is provided in a dedicated section below.
 
 ### `Server` directory
 The server side is composed of two parts:
@@ -127,23 +139,15 @@ The dashboard contains three pages:
 
 <img src="img/wealth_map.png" alt="API_home" width="600"/>
 
-
-
 ## Data engineering
-### Data sources
 We gathered data from three different open and free sources:
 - Movies and Actors database, by James Gaskin on data.world: https://data.world/jamesgaskin/movies
 - OMDB API: http://www.omdbapi.com/?
 - GeoAPIfy
 
-The James Gaskin's dataset includes information about 636 movies as well as their characters and the actors who play them. 
-
-### Data management
-The James Gaskin's dataset was retrieved from data.world by writing an SQL query to get each table and download the result as a CSV file. The three files `actor.csv`, `character.csv` and `movies.csv` are saved in the `Datasets` directory.
+The James Gaskin's dataset includes information about 636 movies as well as their characters and the actors who play them. The James Gaskin's dataset was retrieved from data.world by writing an SQL query to get each table and download the result as a CSV file. The three files `actor.csv`, `character.csv` and `movies.csv` are saved in the `Datasets` directory.
 
 Using the titles from the movies in the James Gaskin's dataset, queries were made to the OMDB API to retrieve additional information about the movies as well as data already present in the James Gaskin's dataset to cross-check the values. Because the call to the API to retrieve all 636 movies take some time, the data are added to a DataFrame and saved as a CSV file (`Datasets/omdb.csv`). The code used to perform these actions can be found in `data_management.ipynb`.
-
-
 
 ## Data analysis
 ### Research questions
@@ -160,29 +164,48 @@ We look at different variables that can influence these metrics:
 
 ### Analysis
 We conducted various analyses on the cleaned and transformed dataset, including:
-- Calculated the average rating for each actor by aggregating the ratings of the movies they appeared in.
-- Calculated the pay gap between male and female actors by comparing the average earnings of male actors to female actors.
-- Compared ratings to budget, gross, and ROI to identify any trends or correlations.
-- Identifying the best director based on the average IMDb rating of their movies.
-- Analyzing the relationship between budget, gross, and ROI with movie ratings.
+- Calculate the average rating for each actor by aggregating the ratings of the movies they appeared in.
+- Calculate the pay gap between male and female actors by comparing the wealth of male actors to female actors.
+- Compare ratings to budget, gross, and ROI to identify any trends or correlations.
+- Identife the best director based on the average IMDb rating of their movies and the gross revenue.
+- Analyse the relationship between budget, gross and ROI, and movie ratings.
 
 ### Data visualization
-These visualizations were created using Python libraries such as Matplotlib . They were designed to effectively convey the insights and findings gained from the data analysis process; In a clear and concise manner. Visualizations include bar charts, and pie charts to effectively communicate the findings and insights.
-- Bar charts: We used bar charts to compare the average ratings of male and female actors. This visualization helped us understand the differences in ratings between the two groups.
-- Pie charts: We used pie charts to showcase the distribution of actor among different contries. 
-- GeoJson this type of visualization can provide insights into the global distribution of actors, and help identify any geographical patterns or trends. It can also be useful for making comparisons between regions and understanding the impact of location on the film industry.
+Visualizations are created first using Python libraries such as Matplotlib and eventually in JavaScript with Plotly, AnyChart and Leaflet. They are designed to effectively convey the insights and findings gained from the data analysis process; In a clear and concise manner. We use different types for different puproses:
+- Bar charts: to compare the wealth of male and female actors, as well as the gross revenue and ratings from directors. This visualization helped us understand the differences in ratings between the two groups.
+- Scatter plot: to compare the return on investment (ROI) and actors net worth to the average IMDB ratings.
+- Word cloud: to display the most used words in the movies plots per genre.   
+- Leaflet (based on GeoJSON data): to provide insights into the global distribution of actors, and help identify any geographical patterns or trends. It can also be useful for making comparisons between regions and understanding the impact of location on the film industry.
 
 ## Conclusion
 Through this project, we successfully gathered and integrated data from different sources, performed data cleaning and transformation tasks, conducted data analysis, and created visualizations to gain insights about the movies and actors dataset. The project highlights the importance of data engineering in organizing and analyzing large datasets to extract valuable information.
 
 The findings from this project can be used to make informed decisions in the film industry, such as casting choices, budget allocation, and identifying successful directors and actors.
 
+### Return on investment compared to IMDB ratings
+We find only very weak or no correlation between revenue/budget and IMDB ratings.
+
+<img src="img/analysis_roi.png" alt="roi" width="600"/>
+
+### Best directors
+We find that across all genres, the directors getting the highest IMDB ratings differ from the ones generating the most gross revenues.
+
+<img src="img/analysis_directors.png" alt="directors" width="600"/>
+
+### Actors networth compared to IMDB ratings
+We find only a very weak correlation between an actor networth and their average IMDB ratings.
+
+<img src="img/analysis_actors.png" alt="actors" width="600"/>
+
+### Gender Wealth Gap
 We also looked at the Gender Wealth Gap (difference between the net worth of male and female actors)
 - The wealth of the Top 100 richest male actors is compared to the wealth of the Top 100 richest female actors
 - We find that the richest female actor (Reese Witherspoon) has a net worth of 50% of the richest male actor (Tom Cruise): 300M USD compared to 600M USD
 - Reese Witherspoon is less rich than the Top 15 men
 - The male actors' average net worth is $39,556,492
 - The female actors' average net worth is $29,617,704 (75% of Male actors' net worth)
+
+<img src="img/analysis_gap.png" alt="gap" width="600"/>
 
 ## Limitations
 - The number of actors in the dataset is limited
