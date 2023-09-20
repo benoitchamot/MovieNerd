@@ -37,7 +37,7 @@ function updatePlot(inputValue) {
     var trace1 = {
         x: top_directors.map(object => object.imdbRating),
         y: top_directors.map(object => object.Director),
-        name: " Top Directors by average OMDB Ratings",
+        name: " Top Directors by average IMDB Ratings",
         type: "bar",
         orientation: "h",
         marker: {
@@ -55,7 +55,7 @@ function updatePlot(inputValue) {
             weight: 'bold'
         }},
         bargroupgap: 0.4,
-        title: `<b>Top Directors by Average OMDB Ratings<b>`,
+        title: `<b>Top Directors by Average IMDB Ratings<b>`,
         width: 600,
         height: 800  
 	};
