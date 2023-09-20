@@ -5,8 +5,6 @@ const baseURL = api_base_url + 'financials';
 function init() {
 
     // Fetch financial data 
-    //fetchData(BudgetData);
-    //fetchData(GrossData);
     fetchData(ROIData);
     
     // Fetch data and process it for the rating distribution chart
@@ -16,88 +14,6 @@ function init() {
     function fetchData(callback) {
         d3.json(baseURL).then(callback);
     }
-
-    function BudgetData(data) {
-
-        // Extract budget and ratings from data
-        let budgetDataColl = [];
-        for (let i = 0; i < data.length; i++) {
-            let record = data[i];
-
-            let budget = record["Budget"];
-            let rating = record["Rating"];
-            budgetDataColl.push({budget: budget, rating: rating});
-        }
-        
-    
-        // Prepare data for plotting
-        let trace = {
-            x: budgetDataColl.map(object => object.budget),
-            y: budgetDataColl.map(object => object.rating),
-            name: "Budget Data",
-            mode:'markers',
-            type: "Scatter",
-            marker: {
-                color: 'D0F70F'
-            }};
-
-        // Create the layout 
-        let layout = {
-            height: 700,
-            Width:800,
-            title: "Budget Data",
-            xaxis: {
-                title: 'Budget'
-           },
-            yaxis: {
-                title: 'Rating'
-            }
-        };
-
-        // Plot the Bar Chart
-        Plotly.newPlot("RatingBudgetDiv", [trace], layout);
-    }   
-
-    function GrossData(data) {
-
-        // Extract gross and ratings from data
-        let grossDataColl = [];
-        for (let i = 0; i < data.length; i++) {
-            let record = data[i];
-
-            let gross = record["Gross"];
-            let rating = record["Rating"];
-            grossDataColl.push({gross: gross, rating: rating});
-        }
-        
-    
-        // Prepare data for plotting
-        let trace = {
-            x: grossDataColl.map(object => object.gross),
-            y: grossDataColl.map(object => object.rating),
-            name: "Gross Data",
-            mode:'markers',
-            type: "Scatter",
-            marker: {
-                color: 'CFBE12',
-            }};
-
-        // Create the layout 
-        let layout = {
-            height: 700,
-            Width:800,
-            title: "Gross Data",
-            xaxis: {
-                title: 'Gross'
-           },
-            yaxis: {
-                title: 'Rating'
-            }
-        };
-
-        // Plot the Bar Chart
-        Plotly.newPlot("RatingGrossDiv", [trace], layout);
-    }   
 
     function ROIData(data) {
 
@@ -138,14 +54,13 @@ function init() {
         let layout = {
             height: 700,
             Width:800,
-            title: "ROI Data",
             xaxis: {
-                title: 'ROI',
+                title: 'Return on investment',
                 type: 'log',
                 autorange:true
            },
             yaxis: {
-                title: 'Rating'
+                title: 'IMDB Rating'
             }
         };
 

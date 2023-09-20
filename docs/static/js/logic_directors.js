@@ -47,7 +47,7 @@ function updatePlot(inputValue) {
     };
 
     var layout = {
-		xaxis: { title: "Average OMDB Rating", showgrid : false, zeroline : false},
+		xaxis: { title: "Average IMDB Rating", showgrid : false, zeroline : false},
         yaxis: {showgrid : false, tickfont: {
             size: 15,
             family: 'Arial, sans-serif',

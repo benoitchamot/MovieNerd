@@ -103,7 +103,7 @@ function markerColour(Country){
     // Defining a map object.
     let myMap = L.map("map", {
       center: [28, 2],
-      zoom: 2.6,
+      zoom: 2.4,
       layers: [street, networth]
     });
   

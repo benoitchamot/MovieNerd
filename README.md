@@ -1,4 +1,4 @@
-# MONU_project3
+# Movie Nerd. Data Nerd.
 Repository for Monash University Bootcamp Project 3 (Group 7)
 
 ## Prerequesites
@@ -51,16 +51,21 @@ const api_base_url = 'http://127.0.0.1:5000/api/v1.0/'; // Use this for locally-
 //const api_base_url = 'https://spiderdwarf.pythonanywhere.com/api/v1.0/'; // Use this for web-hosted API
 ```
 
-
-
-
-
 ## File structure and operational logic
 ### Directories
+- `DataExploration` contains files used early in the project to explore the data and functions to be used later
 - `Datasets` contains all the CSV files extracted or created as part of the ETL process
 - `docs` contains the HTML, JavaScript and CSS used to create the Dashboard
 - `img` contains the images used in this README
 - `Server` contains the ETL Jupyter notebooks, the Flask code and the Python modules used in the Flask app, and the SQLite database
+
+### `DataExploration` directory
+The files in the `DataExploration` directory were used at the very beginning of the project and serve various purposes:
+1. Open and display the data from the different CSV files
+2. Analyse some trends and display the data for qualitative analysis
+3. Prepare prototypes of some functions to be used in the ETL process and in the Flask Server
+
+These files are as self-explanatory as possible but they are secondary to the finished project and not required to run either of the ETL process files, Flask Server or the dasboard itself. They are provided for the sake of completeness only.
 
 ### `Dataset` directory
 - `actor.csv` is downloaded from the Movies and Actors database, by James Gaskin on data.world: https://data.world/jamesgaskin/movies (James Gaskin dataset)
@@ -115,6 +120,13 @@ The API [home page](https://spiderdwarf.pythonanywhere.com/) is shown below (the
 The API exposes various static and dynanmic routes that are detailed on the API home page.
 
 ## Dashboard
+The dashboard contains three pages:
+1. The home page: [index.html](https://benoitchamot.github.io/MONU_project3/) contains information about the movies return on investment (ROI), a tag cloud of words found in the movies summaries (filtered by genre) and the most successful directors (by IMDB ratings and gross revenue; also filtered by genre.)
+2. The actors info page: [info_actors.html](https://benoitchamot.github.io/MONU_project3/info_actors.html) contains information about the actors such as the Top 10 acors by rating and number of movies, the distribution of actors per rating and networth, a scatter plot of Net Worth vs IMDb Rating, and an overview of the wealth gap between the richest male and female actors.
+3. The wealth map page: [map.html](https://benoitchamot.github.io/MONU_project3/map.html) shows a map with markers showing the average net worth of the actors born in different countries (see below)
+
+<img src="img/wealth_map.png" alt="API_home" width="600"/>
+
 
 
 ## Data engineering
@@ -131,14 +143,6 @@ The James Gaskin's dataset was retrieved from data.world by writing an SQL query
 
 Using the titles from the movies in the James Gaskin's dataset, queries were made to the OMDB API to retrieve additional information about the movies as well as data already present in the James Gaskin's dataset to cross-check the values. Because the call to the API to retrieve all 636 movies take some time, the data are added to a DataFrame and saved as a CSV file (`Datasets/omdb.csv`). The code used to perform these actions can be found in `data_management.ipynb`.
 
-
-### Data cleaning and transformation
-
-In the `data_management.ipynb` notebook, we performed several data cleaning and transformation tasks:
-- Removed unnecessary columns from the James Gaskin's dataset.
-- Standardized and cleaned the data in the James Gaskin's dataset, such as removing duplicates, handling missing values, and converting data types.
-- Merged the James Gaskin's dataset with the OMDB dataset using the movie titles to obtain additional movie information.
-  
 
 
 ## Data analysis
