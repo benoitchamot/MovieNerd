@@ -107,7 +107,7 @@ CORS(app)
 def home():
 	print("Server received request for Home page")
 	return (
-		f"<h1>Movies Nerd API</h1>"
+		f"<h1>Movie Nerd API</h1>"
 		f"<h2>Static routes</h2>"
 		f"<p><a href='api/v1.0/movies'>/api/v1.0/movies</a></p>"
 		f"<ul>"
