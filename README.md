@@ -3,10 +3,14 @@ An interactive dashboard built on JavaScript and Python (Flask) to show informat
 
 Submitted for Monash University Bootcamp Project 3 (Group 7).
 
-## Prerequesites
+## Prerequisites
 ### API keys
+To complete the ETL steps, the following APIs are used that need keys:
+
 - Create a module named `config.py` in `/ETL` with a variable called `omdb_api_key` containing your OMDB API key
 - Add a variable called `geoapify_key` and containing your GeoAPIfy key in `config.py`
+
+No prerequisites are needed to run the dashboard itself.
 
 ## Approach
 - Get the data in CSV files for every collaborator to access
@@ -157,12 +161,26 @@ The API [home page](https://spiderdwarf.pythonanywhere.com/) is shown below (the
 The API exposes various static and dynanmic routes that are detailed on the API home page.
 
 ## Dashboard
+### Pages
 The dashboard contains three pages:
 1. The home page: [index.html](https://benoitchamot.github.io/MONU_project3/) contains information about the movies return on investment (ROI), a tag cloud of words found in the movies summaries (filtered by genre) and the most successful directors (by IMDB ratings and gross revenue; also filtered by genre.)
 2. The actors info page: [info_actors.html](https://benoitchamot.github.io/MONU_project3/info_actors.html) contains information about the actors such as the Top 10 acors by rating and number of movies, the distribution of actors per rating and networth, a scatter plot of Net Worth vs IMDb Rating, and an overview of the wealth gap between the richest male and female actors.
 3. The wealth map page: [map.html](https://benoitchamot.github.io/MONU_project3/map.html) shows a map with markers showing the average net worth of the actors born in different countries (see below)
 
 <img src="img/wealth_map.png" alt="API_home" width="600"/>
+
+The website CSS is based on Bootstrap.
+
+### JavaScript libraries
+- D3.js
+- Leaflet.js
+- Plotly.js
+- AnyChart.js
+
+### Dashboard codebase
+An overview of the code behind the dashboard and how the different files call each other is shown below:
+
+<img src="img/dashboard_logic.jpg" alt="Dashboard logic" width="700"/>
 
 ## Data analysis
 ### Research questions
