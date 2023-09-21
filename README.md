@@ -35,7 +35,11 @@ However, if you would like to start with a blank sheet, the following steps can 
 
 ## How to run the dashboard
 ### Launch the dashboard
-To start the dashboard, simply open `index.html` in `/docs` in any browser. By default, the dashboard uses a version of the API (same code and same functions) that is hosted on [PythonAnywhere](https://www.pythonanywhere.com/) so the Flask Server is not needed. To use the web-hosted API, make sure that the first lines of code in `common.js` in `/docs/static/js` are commented out as shown below:
+To start the dashboard, simply open `index.html` in `/docs` in any major browser. The data will load automatically from the Movie Nerd API. 
+
+<img src="img/dashboard.png" alt="dashboard home page" width="600"/>
+
+By default, the dashboard uses a version of the API (same code and same functions) that is hosted on [PythonAnywhere](https://www.pythonanywhere.com/) so the Flask Server is not needed. To use the web-hosted API, make sure that the first lines of code in `common.js` in `/docs/static/js` are commented out as shown below:
 
 ```JavaScript
 //const api_base_url = 'http://127.0.0.1:5000/api/v1.0/'; // Use this for locally-run API (Flask Server must be running)
@@ -126,13 +130,19 @@ The dataflow is shown in the diagram below:
 
 ## Data engineering and ETL
 We gathered data from three different open and free sources:
-- Movies and Actors database, by James Gaskin on data.world: https://data.world/jamesgaskin/movies
-- OMDB API: http://www.omdbapi.com/?
-- GeoAPIfy
+- Movies and Actors database, by James Gaskin on [data.world](https://data.world/): https://data.world/jamesgaskin/movies
+- OMDB API: http://www.omdbapi.com/
+- Geoapify: https://www.geoapify.com/
 
 The James Gaskin's dataset includes information about 636 movies as well as their characters and the actors who play them. The James Gaskin's dataset was retrieved from data.world by writing an SQL query to get each table and download the result as a CSV file. The three files `actor.csv`, `character.csv` and `movies.csv` are saved in the `Datasets` directory.
 
-Using the titles from the movies in the James Gaskin's dataset, queries were made to the OMDB API to retrieve additional information about the movies as well as data already present in the James Gaskin's dataset to cross-check the values. Because the call to the API to retrieve all 636 movies take some time, the data are added to a DataFrame and saved as a CSV file (`Datasets/omdb.csv`). The code used to perform these actions can be found in `data_management.ipynb`.
+Using the titles from the movies in the James Gaskin's dataset, queries are made to the OMDB API to retrieve additional information about the movies as well as data already present in the James Gaskin's dataset to cross-check the values. Because the call to the API to retrieve all 636 movies take some time, the data are added to a DataFrame and saved as a CSV file (`Datasets/omdb.csv`). The code used to perform these actions can be found in `ETL_omdb_to_csv.ipynb`.
+
+The complete ETL process is shown, including the API used, the CSV files created and the tables in the database.
+
+<img src="img/ETL1.jpg" alt="ETL 1" width="700"/>
+
+The complexity of the ETL is the result of the distribution of work. A system with redundancy was preferred over a more streamlined approach in order to give more independence to each team member with less risk for conflict. In a future version, the tables could be further normalised and the ETL process consolidated.
 
 ### Flask and API
 The API [home page](https://spiderdwarf.pythonanywhere.com/) is shown below (the API may look different depending on the current version):
@@ -208,7 +218,6 @@ We also looked at the Gender Wealth Gap (difference between the net worth of mal
 <img src="img/analysis_gap.png" alt="gap" width="600"/>
 
 ## Limitations
-- The number of actors in the dataset is limited
 - The sources for the net worth data in the James Gaskin dataset are unclear and may not be accurate
 - The same goes for the movies budget and gross revenue and these data should be validated with alternate sources
 
